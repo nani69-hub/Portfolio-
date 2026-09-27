@@ -16,178 +16,336 @@
       font-family: 'Space Grotesk', sans-serif;
     }
     body {
-      background-color: #050711;
+      background-color: #060913;
       color: #fff;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-    .bg-glow-1, .bg-glow-2 {
+
+    /* Ambient Background Lights */
+    .bg-glow-1 {
       position: fixed;
-      width: 450px;
-      height: 450px;
-      filter: blur(90px);
+      top: -100px;
+      left: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.14) 0%, transparent 70%);
+      filter: blur(100px);
       z-index: 0;
       pointer-events: none;
     }
-    .bg-glow-1 { top: 10%; left: 5%; background: radial-gradient(circle, rgba(0, 242, 254, 0.12), transparent 70%); }
-    .bg-glow-2 { bottom: 10%; right: 5%; background: radial-gradient(circle, rgba(147, 51, 234, 0.15), transparent 70%); }
+    .bg-glow-2 {
+      position: fixed;
+      bottom: -100px;
+      right: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.16) 0%, transparent 70%);
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+    }
 
+    /* Navbar */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 18px 8%;
+      padding: 14px 6%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(5, 7, 17, 0.75);
-      backdrop-filter: blur(12px);
+      background: rgba(6, 9, 19, 0.85);
+      backdrop-filter: blur(14px);
       z-index: 100;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .logo { font-size: 1.3rem; font-weight: 700; color: #00f2fe; }
-    .nav-links a {
-      color: #94a3b8;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.95rem;
-      transition: color 0.2s;
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #00f2fe;
+      letter-spacing: 1px;
     }
-    .nav-links a:hover { color: #00f2fe; }
-    .admin-nav {
-      border: 1px solid rgba(0, 242, 254, 0.4);
-      padding: 6px 14px;
-      border-radius: 12px;
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .edit-toggle-btn {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #060913;
+      border: none;
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .edit-toggle-btn:hover { transform: scale(1.04); }
+    .save-btn {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
     }
 
     .container {
-      width: 88%;
-      max-width: 1200px;
+      width: 90%;
+      max-width: 1050px;
       margin: 0 auto;
       position: relative;
       z-index: 10;
     }
 
+    /* Hero Section: Centered & Balanced */
     .hero {
-      min-height: 100vh;
+      min-height: calc(100vh - 60px);
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.1fr 0.9fr;
       align-items: center;
-      gap: 40px;
-      padding-top: 100px;
+      gap: 35px;
+      padding-top: 80px;
+      padding-bottom: 30px;
     }
+
     .badge {
-      display: inline-block;
-      padding: 6px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
       background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.4);
+      border: 1px solid rgba(0, 242, 254, 0.35);
       color: #00f2fe;
       border-radius: 20px;
-      font-size: 13px;
-      letter-spacing: 1px;
-      margin-bottom: 15px;
+      font-size: 12.5px;
+      margin-bottom: 14px;
     }
-    h1 { font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 15px; }
+    .badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #00f2fe;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00f2fe;
+    }
+
+    h1 {
+      font-size: 2.9rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
     h1 span {
-      background: linear-gradient(135deg, #00f2fe, #4facfe, #9333ea);
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9333ea 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .subtitle { color: #94a3b8; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
-    .contact-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .contact-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
     .chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 6px 14px;
-      border-radius: 16px;
-      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 7px 13px;
+      border-radius: 12px;
+      font-size: 0.82rem;
       color: #cbd5e1;
       text-decoration: none;
       transition: all 0.2s;
     }
-    .chip:hover { border-color: #00f2fe; color: #00f2fe; }
+    .chip:hover {
+      border-color: #00f2fe;
+      color: #00f2fe;
+      transform: translateY(-2px);
+    }
 
-    .card-stage { perspective: 1000px; display: flex; justify-content: center; }
-    .card-wrap {
+    /* Interactive Spotlight Image Card */
+    .image-stage {
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .interactive-card {
       position: relative;
-      width: 340px;
-      height: 460px;
+      width: 320px;
+      height: 420px;
       border-radius: 24px;
-      transform-style: preserve-3d;
+      background: #0b1120;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
       cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.2s;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
     }
-    .card-wrap::before {
-      content: '';
+    .interactive-card:hover {
+      box-shadow: 0 25px 50px rgba(0, 242, 254, 0.15);
+    }
+
+    /* Ambient Outer Halo */
+    .card-halo {
       position: absolute;
-      inset: -2px;
-      border-radius: 26px;
-      background: linear-gradient(135deg, #00f2fe, #9333ea);
+      inset: -15px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(147, 51, 234, 0.25));
+      filter: blur(20px);
       z-index: 1;
-      opacity: 0.7;
-      filter: blur(8px);
+      pointer-events: none;
     }
-    .card-inner {
+
+    .card-content {
       position: relative;
       width: 100%;
       height: 100%;
-      background: #0b0f19;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
       z-index: 2;
+      overflow: hidden;
+      border-radius: 23px;
     }
-    .card-inner img { width: 100%; height: 100%; object-fit: cover; }
-    .glare {
+
+    .card-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .interactive-card:hover .card-content img {
+      transform: scale(1.03);
+    }
+
+    /* Cursor Follow Spotlight & Glass Glare */
+    .spotlight {
       position: absolute;
       inset: 0;
       pointer-events: none;
+      z-index: 3;
       mix-blend-mode: overlay;
       opacity: 0;
-      z-index: 3;
+      transition: opacity 0.3s;
     }
 
-    section { padding: 90px 0; }
-    .section-title { font-size: 2.2rem; margin-bottom: 35px; color: #fff; }
+    .card-badge-floating {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      padding: 10px 14px;
+      background: rgba(6, 9, 19, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-badge-floating .role {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-badge-floating .status-dot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #10b981;
+    }
+    .card-badge-floating .status-dot::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+
+    /* Sections */
+    section { padding: 35px 0; }
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
     .section-title span { color: #00f2fe; }
 
     .grid-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
     }
     .card {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 18px;
       backdrop-filter: blur(10px);
-      transition: border-color 0.3s;
+      transition: border-color 0.25s, transform 0.2s;
     }
-    .card:hover { border-color: rgba(0, 242, 254, 0.5); }
-    .card h3 { font-size: 1.3rem; margin-bottom: 8px; color: #f8fafc; }
-    .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
+    .card:hover {
+      border-color: rgba(0, 242, 254, 0.35);
+      transform: translateY(-2px);
+    }
+    .card h3 { font-size: 1.15rem; margin-bottom: 6px; color: #f8fafc; }
+    .card p { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; }
     .card .tag {
       display: inline-block;
-      margin-top: 15px;
-      font-size: 0.8rem;
+      margin-top: 10px;
+      font-size: 0.75rem;
       color: #00f2fe;
       background: rgba(0, 242, 254, 0.1);
-      padding: 4px 10px;
-      border-radius: 8px;
+      padding: 3px 8px;
+      border-radius: 6px;
     }
 
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; text-align: center; }
+    /* Editing Highlights */
+    body.is-editing [contenteditable="true"] {
+      outline: 2px dashed #00f2fe !important;
+      background: rgba(0, 242, 254, 0.08);
+      border-radius: 4px;
+      cursor: text;
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 75px;
+        text-align: center;
+        gap: 25px;
+      }
+      .interactive-card {
+        width: 280px;
+        height: 380px;
+        margin: 0 auto;
+      }
+      h1 { font-size: 2.2rem; }
       .contact-chips { justify-content: center; }
-      .card-wrap { width: 290px; height: 390px; margin: 0 auto; }
-      h1 { font-size: 2.3rem; }
     }
   </style>
 
+  <!-- Firebase Setup -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyB-Y-VPSbaAUDYS06A3sdnRqklybn2CdDE",
@@ -201,25 +359,51 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const siteContentRef = ref(db, 'site_content');
 
-    const dynamicGrid = document.getElementById('dynamic-projects');
-    const projectsRef = ref(db, 'projects');
-
-    onValue(projectsRef, (snapshot) => {
+    onValue(siteContentRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        Object.keys(data).reverse().forEach((key) => {
-          const item = data[key];
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <span class="tag">${item.category || 'Portfolio Entry'}</span>
-          `;
-          dynamicGrid.prepend(card);
+        Object.keys(data).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = data[id];
         });
       }
+    });
+
+    const editBtn = document.getElementById('edit-mode-btn');
+    const saveBtn = document.getElementById('save-mode-btn');
+
+    editBtn.addEventListener('click', () => {
+      const password = prompt("Admin password enter cheyandi:");
+      if (password === "nani123") {
+        document.body.classList.add('is-editing');
+        document.querySelectorAll('.editable').forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+        });
+        editBtn.style.display = 'none';
+        saveBtn.style.display = 'inline-block';
+        alert("Edit Mode ON! Text direct ga tap chesi edit cheyandi, aypoyaka Save nokkandi.");
+      } else {
+        alert("Wrong Password!");
+      }
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const contentToSave = {};
+      document.querySelectorAll('.editable').forEach(el => {
+        if (el.id) contentToSave[el.id] = el.innerHTML;
+        el.setAttribute('contenteditable', 'false');
+      });
+
+      set(siteContentRef, contentToSave).then(() => {
+        document.body.classList.remove('is-editing');
+        saveBtn.style.display = 'none';
+        editBtn.style.display = 'inline-block';
+        alert("Mee edits database lo successfully save ayyayi!");
+      }).catch(err => {
+        alert("Error saving: " + err.message);
+      });
     });
   </script>
 </head>
@@ -230,128 +414,152 @@
 
   <nav>
     <div class="logo">K. NANI</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="admin.html" class="admin-nav">Admin Portal</a>
+    <div class="nav-actions">
+      <button class="edit-toggle-btn" id="edit-mode-btn">✏️ Edit Website</button>
+      <button class="save-btn" id="save-mode-btn">💾 Save Changes</button>
     </div>
   </nav>
 
   <div class="container">
-    <section class="hero" id="about">
+    <!-- Hero Section -->
+    <section class="hero">
       <div>
-        <span class="badge">ECE Undergrad & Tech Enthusiast</span>
-        <h1>Hi, I'm <span>Koppisetti Nani</span></h1>
-        <p class="subtitle">
-          Currently pursuing 2nd year B.Tech in Electronics and Communication Engineering (ECE) at <strong>Krishna University</strong>. Native of <strong>Vizag</strong> with strong practical knowledge in circuits, microcontrollers, and modern interactive web.
+        <span class="badge editable" id="hero-badge">ECE Undergrad & Tech Enthusiast</span>
+        <h1>Hi, I'm <span class="editable" id="hero-name">Koppisetti Nani</span></h1>
+        <p class="subtitle editable" id="hero-desc">
+          Currently pursuing 2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Native of Vizag with strong practical knowledge in circuits, microcontrollers, and modern interactive web.
         </p>
 
         <div class="contact-chips">
-          <a href="mailto:koppisettinani69@gmail.com" class="chip">✉ koppisettinani69@gmail.com</a>
-          <a href="tel:8328022844" class="chip">📞 +91 8328022844</a>
-          <a href="https://github.com/nani69-hub" target="_blank" class="chip">🐙 GitHub: nani69-hub</a>
-          <a href="https://in.linkedin.com/in/nani-koppisetti" target="_blank" class="chip">🔗 LinkedIn: nani-koppisetti</a>
-          <span class="chip">📍 Vizag / Machilipatnam</span>
+          <span class="chip editable" id="chip-mail">koppisettinani69@gmail.com</span>
+          <span class="chip editable" id="chip-phone">+91 8328022844</span>
+          <span class="chip editable" id="chip-github">GitHub: nani69-hub</span>
+          <span class="chip editable" id="chip-linkedin">LinkedIn: nani-koppisetti</span>
+          <span class="chip editable" id="chip-location">Vizag / Machilipatnam</span>
         </div>
       </div>
 
-      <div class="card-stage">
-        <div class="card-wrap" id="card">
-          <div class="card-inner">
-            <div class="glare" id="glare"></div>
-            <img src="avatar.png" alt="Koppisetti Nani Avatar" id="avatar-img" />
+      <!-- Attractive 2D Interactive Stage -->
+      <div class="image-stage">
+        <div class="card-halo"></div>
+        <div class="interactive-card" id="interactive-card">
+          <div class="spotlight" id="spotlight"></div>
+          <div class="card-content">
+            <img src="avatar.png" alt="Koppisetti Nani" />
+          </div>
+          <div class="card-badge-floating">
+            <span class="role editable" id="badge-role">ECE Developer</span>
+            <span class="status-dot">Available for Projects</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="education">
+    <!-- Education Section -->
+    <section>
       <h2 class="section-title">Education <span>Journey</span></h2>
       <div class="grid-cards">
         <div class="card">
-          <h3>B.Tech in ECE (2nd Year)</h3>
-          <p><strong>Krishna University</strong>, Machilipatnam</p>
-          <span class="tag">Pursuing (2024 - Present)</span>
+          <h3 class="editable" id="edu-1-title">B.Tech in ECE (2nd Year)</h3>
+          <p class="editable" id="edu-1-body">Krishna University, Machilipatnam</p>
+          <span class="tag editable" id="edu-1-tag">Pursuing (2024 - Present)</span>
         </div>
         <div class="card">
-          <h3>Diploma in ECE[span_2](start_span)[span_2](end_span)</h3>
-          <p>Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)[span_3](start_span)[span_3](end_span)</p>
-          <span class="tag">84% Aggregate (2023 - 2026)[span_4](start_span)[span_4](end_span)</span>
+          <h3 class="editable" id="edu-2-title">Diploma in ECE</h3>
+          <p class="editable" id="edu-2-body">Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)</p>
+          <span class="tag editable" id="edu-2-tag">84% Aggregate (2023 - 2026)</span>
         </div>
         <div class="card">
-          <h3>Secondary School (SSC)[span_5](start_span)[span_5](end_span)</h3>
-          <p>Sri Bhavani Vidyanikethan EM School[span_6](start_span)[span_6](end_span)</p>
-          <span class="tag">88.1% (2023)[span_7](start_span)[span_7](end_span)</span>
+          <h3 class="editable" id="edu-3-title">Secondary School (SSC)</h3>
+          <p class="editable" id="edu-3-body">Sri Bhavani Vidyanikethan EM School</p>
+          <span class="tag editable" id="edu-3-tag">88.1% (2023)</span>
         </div>
       </div>
     </section>
 
-    <section id="skills">
+    <!-- Technical Skills Section -->
+    <section>
       <h2 class="section-title">Technical <span>Skills</span></h2>
       <div class="grid-cards">
         <div class="card">
-          <h3>Electronic Components[span_8](start_span)[span_8](end_span)</h3>
-          <p>Working knowledge of Resistors, Capacitors, Inductors, Diodes, LEDs, Transistors, ICs, Relays & Switches[span_9](start_span)[span_9](end_span).</p>
+          <h3 class="editable" id="skill-1-title">Electronic Components</h3>
+          <p class="editable" id="skill-1-body">Working knowledge of Resistors, Capacitors, Inductors, Diodes, LEDs, Transistors, ICs, Relays & Switches.</p>
         </div>
         <div class="card">
-          <h3>Microcontrollers & IoT[span_10](start_span)[span_10](end_span)</h3>
-          <p>Microcontroller concepts, Arduino Uno development, and sensor interface integration[span_11](start_span)[span_11](end_span).</p>
+          <h3 class="editable" id="skill-2-title">Microcontrollers & IoT</h3>
+          <p class="editable" id="skill-2-body">Microcontroller concepts, Arduino Uno development, and sensor interface integration.</p>
         </div>
         <div class="card">
-          <h3>PCB Design & Assembly[span_12](start_span)[span_12](end_span)</h3>
-          <p>Analog circuit design fundamentals, PCB design process awareness, soldering and desoldering[span_13](start_span)[span_13](end_span).</p>
+          <h3 class="editable" id="skill-3-title">PCB Design & Assembly</h3>
+          <p class="editable" id="skill-3-body">Analog circuit design fundamentals, PCB design process awareness, soldering and desoldering.</p>
         </div>
         <div class="card">
-          <h3>Computer & Web Tech[span_14](start_span)[span_14](end_span)</h3>
-          <p>Modern HTML5, CSS3, JavaScript, WebGL graphics, and Cloud Database integration.</p>
+          <h3 class="editable" id="skill-4-title">Computer & Web Tech</h3>
+          <p class="editable" id="skill-4-body">Modern HTML5, CSS3, JavaScript, WebGL graphics, and Cloud Database integration.</p>
         </div>
       </div>
     </section>
 
-    <section id="projects">
+    <!-- Projects Section -->
+    <section>
       <h2 class="section-title">Projects & <span>Certifications</span></h2>
-      <div class="grid-cards" id="dynamic-projects">
+      <div class="grid-cards">
         <div class="card">
-          <h3>Anti-Sleep Alarm (Major Project)[span_15](start_span)[span_15](end_span)</h3>
-          <p>Designed a driver-safety device using an IR eye-blink sensor and Arduino Uno to monitor eye activity, detect drowsiness, and activate a buzzer alarm[span_16](start_span)[span_16](end_span).</p>
-          <span class="tag">Embedded Systems</span>
+          <h3 class="editable" id="proj-1-title">Anti-Sleep Alarm (Major Project)</h3>
+          <p class="editable" id="proj-1-body">Designed a driver-safety device using an IR eye-blink sensor and Arduino Uno to monitor eye activity, detect drowsiness, and activate a buzzer alarm.</p>
+          <span class="tag editable" id="proj-1-tag">Embedded Systems</span>
         </div>
         <div class="card">
-          <h3>Electricity from Garbage[span_17](start_span)[span_17](end_span)</h3>
-          <p>Studied waste-to-energy concepts converting biodegradable waste into biogas through anaerobic digestion for renewable power production[span_18](start_span)[span_18](end_span).</p>
-          <span class="tag">Renewable Energy</span>
+          <h3 class="editable" id="proj-2-title">Electricity from Garbage</h3>
+          <p class="editable" id="proj-2-body">Studied waste-to-energy concepts converting biodegradable waste into biogas through anaerobic digestion for renewable power production.</p>
+          <span class="tag editable" id="proj-2-tag">Renewable Energy</span>
         </div>
       </div>
     </section>
   </div>
 
+  <!-- Smooth Cursor & Tilt Interaction Script -->
   <script>
-    const card = document.getElementById('card');
-    const glare = document.getElementById('glare');
-    let bounds;
+    const card = document.getElementById('interactive-card');
+    const spotlight = document.getElementById('spotlight');
 
-    function handleMove(clientX, clientY) {
-      bounds = card.getBoundingClientRect();
-      const cardX = bounds.left + bounds.width / 2;
-      const cardY = bounds.top + bounds.height / 2;
-      const rotX = (-(clientY - cardY) / (window.innerHeight / 2)) * 18;
-      const rotY = ((clientX - cardX) / (window.innerWidth / 2)) * 18;
+    function handleCardMove(clientX, clientY) {
+      const rect = card.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
-      card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-      glare.style.background = `radial-gradient(circle at ${(clientX - bounds.left)}px ${(clientY - bounds.top)}px, rgba(255,255,255,0.3), transparent 60%)`;
-      glare.style.opacity = '1';
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Realistic 3D Tilt Angle (-14 to +14 deg)
+      const rotateX = ((centerY - y) / centerY) * 14;
+      const rotateY = ((x - centerX) / centerX) * 14;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+      // Dynamic Radial Spotlight Reflection
+      spotlight.style.opacity = '1';
+      spotlight.style.background = `radial-gradient(circle 220px at ${x}px ${y}px, rgba(255, 255, 255, 0.35), rgba(0, 242, 254, 0.15) 40%, transparent 80%)`;
     }
 
-    window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
-    window.addEventListener('touchmove', (e) => {
-      if(e.touches.length > 0) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    card.addEventListener('mousemove', (e) => {
+      handleCardMove(e.clientX, e.clientY);
     });
 
-    window.addEventListener('mouseleave', () => {
-      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      glare.style.opacity = '0';
+    card.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        handleCardMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      spotlight.style.opacity = '0';
+    });
+
+    card.addEventListener('touchend', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      spotlight.style.opacity = '0';
     });
   </script>
 </body>
