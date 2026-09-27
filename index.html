@@ -207,7 +207,6 @@
       margin-bottom: 22px;
     }
 
-    /* Direct Working Redirect Chips */
     .chips-group {
       display: flex;
       flex-wrap: wrap;
@@ -234,7 +233,7 @@
       transform: translateY(-2px);
     }
 
-    /* Merged Picture Frame (Smooth feathered blending) */
+    /* Merged Picture Frame */
     .hero-visual {
       position: relative;
       display: flex;
@@ -451,7 +450,7 @@
     }
   </style>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase Integration with Instant Cache -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
@@ -472,7 +471,9 @@
     const auth = getAuth(app);
     const rootRef = ref(db, 'portfolio_data_final_v1');
 
-    let state = {
+    // 1. Check local cache first (Instant render, no delay)
+    const cachedData = localStorage.getItem('nani_portfolio_final_cache');
+    let state = cachedData ? JSON.parse(cachedData) : {
       profile: {
         name: "Koppisetti Nani",
         subtag: "Crafting hardware systems & interactive web experiences.",
@@ -511,10 +512,10 @@
     let isAdmin = false;
     let targetSection = null;
 
-    // Instant local render to eliminate any loading flash
+    // Direct synchronous local render
     renderAll();
 
-    // Sync with Firebase Realtime Cloud
+    // 2. Realtime Cloud Sync
     onValue(rootRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -525,6 +526,8 @@
         if (!state.projects) state.projects = [];
         if (!state.skills) state.skills = [];
         if (!state.education) state.education = [];
+        
+        localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
         renderAll();
       }
     });
@@ -598,7 +601,7 @@
       });
     }
 
-    // Direct Cloud Firebase Admin Login
+    // Admin Auth
     const adminBtn = document.getElementById('admin-btn');
     const saveBtn = document.getElementById('save-btn');
 
@@ -621,30 +624,40 @@
       }
     });
 
-    // Cloud Database Save
-    saveBtn.addEventListener('click', () => {
-      state.profile.name = document.getElementById('p-name').innerText;
-      state.profile.subtag = document.getElementById('p-subtag').innerText;
-      state.profile.bio = document.getElementById('p-bio').innerText;
-      state.profile.location = document.getElementById('p-location').innerText.replace(/^📍\s*/, '');
+    // Save with Cache & Cloud Write
+    saveBtn.addEventListener('click', async () => {
+      try {
+        state.profile.name = document.getElementById('p-name').innerText.trim();
+        state.profile.subtag = document.getElementById('p-subtag').innerText.trim();
+        state.profile.bio = document.getElementById('p-bio').innerText.trim();
+        state.profile.location = document.getElementById('p-location').innerText.replace(/^📍\s*/, '').trim();
 
-      document.querySelectorAll('.grid-item .editable').forEach(el => {
-        const sec = el.getAttribute('data-sec');
-        const idx = el.getAttribute('data-idx');
-        const field = el.getAttribute('data-field');
-        if (state[sec] && state[sec][idx]) {
-          state[sec][idx][field] = el.innerText;
-        }
-      });
+        document.querySelectorAll('.grid-item .editable').forEach(el => {
+          const sec = el.getAttribute('data-sec');
+          const idx = el.getAttribute('data-idx');
+          const field = el.getAttribute('data-field');
+          if (state[sec] && state[sec][idx]) {
+            state[sec][idx][field] = el.innerText.trim();
+          }
+        });
 
-      set(rootRef, state).then(() => {
+        // 1. Instant Cache Update
+        localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+
+        // 2. Cloud Database Update
+        await set(rootRef, state);
+
         isAdmin = false;
         document.body.classList.remove('is-admin');
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'false'));
         saveBtn.style.display = 'none';
         adminBtn.style.display = 'inline-block';
+        
         alert("🎉 Real-time data successfully saved to cloud database!");
-      }).catch(err => alert("⚠️ Error saving: " + err.message));
+      } catch (err) {
+        console.error("Firebase Save Error:", err);
+        alert("⚠️ Save Failed! Error: " + err.message + "\n\n(Check Realtime Database Rules in Firebase Console)");
+      }
     });
 
     document.addEventListener('click', (e) => {
@@ -653,6 +666,7 @@
         const idx = parseInt(e.target.getAttribute('data-idx'), 10);
         if (confirm("Delete this card?")) {
           state[sec].splice(idx, 1);
+          localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
           renderAll();
         }
       }
@@ -710,6 +724,7 @@
       if (img) newItem.img = img;
 
       state[targetSection].push(newItem);
+      localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
       modal.style.display = 'none';
       renderAll();
     });
@@ -763,7 +778,7 @@
           </div>
         </div>
 
-        <!-- Merged Avatar Image with Smooth Feather Blend -->
+        <!-- Merged Avatar Image with Feather Blend -->
         <div class="hero-visual">
           <div class="avatar-blend-container" id="card">
             <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Avatar">
