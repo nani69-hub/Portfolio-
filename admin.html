@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Koppisetti Nani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Space Grotesk',sans-serif; }
+    body { background:#070a14; color:#fff; padding:60px 10%; display:flex; justify-content:center; }
+    .box { background:#0f172a; padding:35px; border-radius:20px; border:1px solid #1e293b; width:100%; max-width:550px; }
+    h2 { margin-bottom:15px; color:#00f2fe; }
+    p { color:#94a3b8; font-size:0.9rem; margin-bottom:20px; }
+    input, textarea, select { width:100%; padding:12px; margin-bottom:15px; background:#070a14; border:1px solid #334155; border-radius:10px; color:#fff; font-size:0.95rem; }
+    button { width:100%; padding:12px; background:#00f2fe; color:#070a14; font-weight:700; border:none; border-radius:10px; cursor:pointer; font-size:1rem; transition:0.2s; }
+    button:hover { background:#38bdf8; }
+    .hidden { display: none; }
+    .back-btn { display:inline-block; margin-top:15px; color:#94a3b8; text-decoration:none; font-size:0.85rem; }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="login-section">
+    <h2>Owner Verification</h2>
+    <p>Authorized access for <strong>koppisettinani69@gmail.com</strong> only.</p>
+    <input type="email" id="auth-email" placeholder="koppisettinani69@gmail.com" />
+    <input type="password" id="auth-password" placeholder="Enter Password" />
+    <button id="btn-login">Login to Dashboard</button>
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+  </div>
+
+  <div class="box hidden" id="dashboard-section">
+    <h2>Publish New Work</h2>
+    <p>Add projects, certificates, or internships directly to Firestore/Cloud.</p>
+    <input type="text" id="item-title" placeholder="Project / Certificate Title" />
+    <textarea id="item-desc" rows="4" placeholder="Brief details about what you built or learned..."></textarea>
+    <select id="item-cat">
+      <option value="Hardware / Embedded">Hardware / Embedded</option>
+      <option value="Web & Software">Web & Software</option>
+      <option value="Internship">Internship Experience</option>
+      <option value="Certification">Technical Certification</option>
+    </select>
+    <button id="btn-submit">Publish Live</button>
+    <p id="status-msg" style="margin-top:15px; color:#10b981; font-weight:600;"></p>
+    <a href="index.html" class="back-btn">← View Live Portfolio</a>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB-Y-VPSbaAUDYS06A3sdnRqklybn2CdDE",
+      authDomain: "portfolio-2d3b8.firebaseapp.com",
+      databaseURL: "https://portfolio-2d3b8-default-rtdb.firebaseio.com",
+      projectId: "portfolio-2d3b8",
+      storageBucket: "portfolio-2d3b8.firebasestorage.app",
+      messagingSenderId: "447114823764",
+      appId: "1:447114823764:web:4e128751c399cf67c145c1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const OWNER_EMAIL = "koppisettinani69@gmail.com";
+
+    document.getElementById('btn-login').addEventListener('click', async () => {
+      const email = document.getElementById('auth-email').value.trim();
+      const pass = document.getElementById('auth-password').value;
+
+      try {
+        const userCred = await signInWithEmailAndPassword(auth, email, pass);
+        if (userCred.user.email.toLowerCase() !== OWNER_EMAIL.toLowerCase()) {
+          alert("Unauthorized access!");
+        }
+      } catch (err) {
+        alert("Login error: " + err.message);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('dashboard-section').classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('btn-submit').addEventListener('click', async () => {
+      const title = document.getElementById('item-title').value.trim();
+      const description = document.getElementById('item-desc').value.trim();
+      const category = document.getElementById('item-cat').value;
+
+      if (!title || !description) return alert("Fill all fields!");
+
+      try {
+        await push(ref(db, 'projects'), {
+          title,
+          description,
+          category,
+          timestamp: Date.now()
+        });
+
+        document.getElementById('status-msg').innerText = "✓ Published to cloud database!";
+        document.getElementById('item-title').value = '';
+        document.getElementById('item-desc').value = '';
+      } catch(e) {
+        alert("Error saving: " + e.message);
+      }
+    });
+  </script>
+</body>
+</html>
