@@ -378,6 +378,110 @@
       display: none;
     }
 
+    /* Formal Ending Section (Footer) */
+    .formal-footer-card {
+      margin-top: 50px;
+      margin-bottom: 30px;
+      background: rgba(13, 17, 25, 0.75);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 45px 36px 30px;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .formal-footer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.5), rgba(255, 42, 95, 0.5), transparent);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    .footer-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #fff;
+      max-width: 650px;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .footer-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+    .footer-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent-red), #e11d48);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 25px rgba(255, 42, 95, 0.35);
+      transition: all 0.25s ease;
+    }
+    .footer-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 42, 95, 0.5);
+    }
+    .footer-meta-bar {
+      margin-top: 40px;
+      padding-top: 20px;
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+    .footer-meta-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-meta-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-meta-links a:hover {
+      color: var(--accent-cyan);
+    }
+
     /* Modal Form */
     .modal-backdrop {
       position: fixed;
@@ -447,6 +551,11 @@
       .hero-title { font-size: 2.4rem; }
       .avatar-blend-container { width: 270px; height: 340px; margin: 0 auto; }
       .chips-group { justify-content: flex-start; }
+      .footer-heading { font-size: 1.7rem; }
+      .footer-meta-bar {
+        flex-direction: column;
+        gap: 12px;
+      }
     }
   </style>
 
@@ -538,9 +647,14 @@
       document.getElementById('p-bio').innerText = state.profile.bio || "";
       document.getElementById('p-location').innerText = `📍 ${state.profile.location || 'Vizag / Machilipatnam'}`;
 
+      const userEmail = state.profile.email || 'koppisettinani69@gmail.com';
       const emailEl = document.getElementById('p-email');
-      emailEl.href = `mailto:${state.profile.email || 'koppisettinani69@gmail.com'}`;
-      emailEl.innerText = `✉️ ${state.profile.email || 'koppisettinani69@gmail.com'}`;
+      emailEl.href = `mailto:${userEmail}`;
+      emailEl.innerText = `✉️ ${userEmail}`;
+
+      // Update formal footer contact button as well
+      const footerEmailBtn = document.getElementById('footer-email-btn');
+      if (footerEmailBtn) footerEmailBtn.href = `mailto:${userEmail}`;
 
       const phoneClean = (state.profile.phone || '+918328022844').replace(/\s+/g, '');
       const phoneEl = document.getElementById('p-phone');
@@ -551,11 +665,15 @@
       const ghEl = document.getElementById('p-github');
       ghEl.href = `https://github.com/${ghUser}`;
       ghEl.innerText = `🐙 GitHub: ${ghUser}`;
+      const footerGh = document.getElementById('footer-gh');
+      if (footerGh) footerGh.href = `https://github.com/${ghUser}`;
 
       const liUser = (state.profile.linkedin || 'nani-koppisetti').replace(/^https?:\/\/([a-z]+\.)?linkedin\.com\/in\//, '');
       const liEl = document.getElementById('p-linkedin');
       liEl.href = `https://www.linkedin.com/in/${liUser}`;
       liEl.innerText = `💼 LinkedIn: ${liUser}`;
+      const footerLi = document.getElementById('footer-li');
+      if (footerLi) footerLi.href = `https://www.linkedin.com/in/${liUser}`;
 
       renderSectionGrid('jobs-grid', state.jobs, 'jobs');
       renderSectionGrid('internships-grid', state.internships, 'internships');
@@ -841,6 +959,32 @@
       </div>
       <div class="grid" id="education-grid"></div>
     </section>
+
+    <!-- Formal Closure Section -->
+    <footer class="formal-footer-card">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Open for Technical Internships & Collaboration</span>
+      </div>
+
+      <h3 class="footer-heading">Have an innovative hardware or software idea? Let's connect.</h3>
+      <p class="footer-desc">
+        Whether it is about microcontroller design, circuit simulation, or interactive digital interfaces, feel free to reach out directly.
+      </p>
+
+      <a id="footer-email-btn" href="mailto:koppisettinani69@gmail.com" class="footer-cta-btn">
+        <span>Get in Touch</span>
+        <span>→</span>
+      </a>
+
+      <div class="footer-meta-bar">
+        <span>© 2026 Koppisetti Nani. All rights reserved.</span>
+        <div class="footer-meta-links">
+          <a id="footer-li" href="https://www.linkedin.com/in/nani-koppisetti" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a id="footer-gh" href="https://github.com/nani69-hub" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
   <!-- Add Card Modal -->
