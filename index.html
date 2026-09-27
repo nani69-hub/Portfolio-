@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Koppisetti Nani — Systems & Web Engineering</title>
+  <title>Koppisetti Nani — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #07090e;
-      --card-bg: rgba(14, 18, 27, 0.75);
+      --bg: #06080d;
+      --card-bg: rgba(13, 17, 25, 0.85);
       --glass-border: rgba(255, 255, 255, 0.08);
       --accent-red: #ff2a5f;
       --accent-cyan: #00f2fe;
@@ -33,97 +33,108 @@
       line-height: 1.5;
     }
 
-    /* Ambient Antigravity Neon Glows */
+    /* Ambient Cockpit Neon Glows */
     .glow-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
     .glow-1 {
       position: absolute;
-      top: -10%;
+      top: 5%;
       right: 15%;
-      width: 550px;
-      height: 550px;
-      background: radial-gradient(circle, rgba(255, 42, 95, 0.16) 0%, transparent 70%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 42, 95, 0.15) 0%, transparent 70%);
       filter: blur(80px);
     }
     .glow-2 {
       position: absolute;
-      top: 25%;
+      top: 30%;
       left: 10%;
-      width: 600px;
-      height: 600px;
+      width: 500px;
+      height: 500px;
       background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
       filter: blur(90px);
     }
 
-    /* Interactive Cursor Spotlight */
     .spotlight-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 50%), rgba(255, 42, 95, 0.05), transparent 80%);
+      background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(255, 42, 95, 0.05), transparent 80%);
     }
 
-    /* Antigravity Nav */
+    /* Navbar */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 16px 8%;
+      padding: 14px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(7, 9, 14, 0.82);
+      background: rgba(6, 8, 13, 0.85);
       backdrop-filter: blur(20px);
       z-index: 100;
       border-bottom: 1px solid var(--glass-border);
     }
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      user-select: none;
+    }
+    .brand-mark {
+      width: 9px;
+      height: 9px;
+      background: var(--accent-red);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-red), 0 0 24px rgba(255, 42, 95, 0.6);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px #00f2fe); }
+    }
+    .brand-text {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .brand-triangle {
-      color: var(--accent-cyan);
-      font-size: 1.1rem;
-    }
-    .brand span {
-      background: linear-gradient(135deg, #fff, #cbd5e1);
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #ffffff 0%, #00f2fe 55%, #ff2a5f 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+    .brand-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
     }
 
-    .nav-btns {
-      display: flex;
-      gap: 12px;
-    }
+    .nav-btns { display: flex; gap: 10px; }
     .btn {
-      padding: 8px 16px;
+      padding: 7px 16px;
       font-size: 0.82rem;
       font-weight: 600;
       border-radius: 20px;
       cursor: pointer;
-      transition: all 0.25s ease;
       border: none;
+      transition: all 0.2s ease;
     }
     .btn-admin {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
       border: 1px solid var(--glass-border);
     }
@@ -131,45 +142,36 @@
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.25);
     }
-    .btn-save {
-      background: #10b981;
-      color: #fff;
-      display: none;
-    }
-    .btn-save:hover { background: #059669; }
+    .btn-save { background: #10b981; color: #fff; display: none; }
 
     .container {
       width: 90%;
-      max-width: 1060px;
+      max-width: 1040px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
     }
 
-    /* ANTIGRAVITY HERO GLASS CARD */
+    /* Antigravity Glass Card */
     .hero-wrapper {
-      padding-top: 100px;
-      padding-bottom: 40px;
-      display: flex;
-      justify-content: center;
+      padding-top: 96px;
+      padding-bottom: 30px;
     }
-
     .antigravity-card {
       width: 100%;
-      background: rgba(13, 16, 26, 0.85);
+      background: rgba(14, 18, 28, 0.88);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 28px;
-      padding: 36px 40px;
+      border-radius: 26px;
+      padding: 36px;
       backdrop-filter: blur(30px);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 42, 95, 0.12);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 42, 95, 0.12);
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 40px;
+      gap: 36px;
       position: relative;
       overflow: hidden;
     }
-
     .antigravity-card::before {
       content: '';
       position: absolute;
@@ -180,13 +182,6 @@
       background: linear-gradient(90deg, transparent, var(--accent-red), var(--accent-cyan), transparent);
     }
 
-    .hero-content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-    }
-
     .role-badge {
       display: inline-flex;
       align-items: center;
@@ -194,24 +189,23 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: #cbd5e1;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .red-dot {
       width: 8px;
       height: 8px;
       background: var(--accent-red);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
     }
 
     .hero-title {
       font-family: 'Syne', sans-serif;
-      font-size: 3.4rem;
+      font-size: 3.2rem;
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1.5px;
-      margin-bottom: 12px;
-      color: #fff;
+      margin-bottom: 10px;
     }
     .hero-title span {
       background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
@@ -225,43 +219,52 @@
       font-weight: 600;
       margin-bottom: 14px;
     }
-
     .hero-bio {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
+    /* Clickable Link Chips */
     .chips-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
-    .chip {
-      background: rgba(255, 255, 255, 0.04);
+    .chip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--glass-border);
-      padding: 6px 14px;
+      padding: 7px 14px;
       border-radius: 20px;
-      font-size: 0.78rem;
-      color: #e2e8f0;
+      font-size: 0.8rem;
+      color: #f1f5f9;
       text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .chip-link:hover {
+      background: rgba(255, 42, 95, 0.15);
+      border-color: var(--accent-red);
+      color: #fff;
+      transform: translateY(-2px);
     }
 
-    /* Antigravity Avatar Visual */
     .hero-visual {
       position: relative;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
     .avatar-frame {
       position: relative;
-      width: 310px;
-      height: 380px;
+      width: 290px;
+      height: 360px;
       border-radius: 22px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       background: #090c15;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
       transform-style: preserve-3d;
@@ -275,9 +278,9 @@
     }
     .avatar-overlay-badge {
       position: absolute;
-      bottom: 14px;
-      left: 14px;
-      right: 14px;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
       padding: 10px 14px;
       background: rgba(9, 13, 22, 0.88);
       backdrop-filter: blur(12px);
@@ -289,19 +292,19 @@
       font-size: 0.78rem;
     }
 
-    /* SECTIONS */
-    section { padding: 36px 0; }
+    /* Sections */
+    section { padding: 34px 0; }
     .section-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       border-bottom: 1px solid var(--glass-border);
       padding-bottom: 12px;
     }
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #fff;
     }
@@ -331,14 +334,12 @@
       padding: 22px;
       backdrop-filter: blur(14px);
       transition: all 0.25s ease;
-      text-align: left;
       display: flex;
       flex-direction: column;
     }
     .grid-item:hover {
       border-color: rgba(255, 255, 255, 0.2);
       transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     }
     .grid-item h3 {
       font-size: 1.05rem;
@@ -352,7 +353,6 @@
       line-height: 1.55;
     }
 
-    /* CERTIFICATE IMAGE CONTAINER */
     .cert-img-container {
       width: 100%;
       height: 165px;
@@ -370,14 +370,12 @@
       object-fit: cover;
       transition: transform 0.3s ease;
     }
-    .cert-img-container:hover img {
-      transform: scale(1.05);
-    }
+    .cert-img-container:hover img { transform: scale(1.05); }
     .view-cert-badge {
       position: absolute;
       bottom: 8px;
       right: 8px;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(4px);
       color: var(--accent-cyan);
       padding: 3px 9px;
@@ -412,7 +410,7 @@
       display: none;
     }
 
-    /* MODAL */
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -431,7 +429,6 @@
       border-radius: 20px;
       padding: 24px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
-      text-align: left;
     }
     .modal-title {
       font-family: 'Syne', sans-serif;
@@ -439,9 +436,7 @@
       margin-bottom: 16px;
       color: #fff;
     }
-    .form-group {
-      margin-bottom: 14px;
-    }
+    .form-group { margin-bottom: 14px; }
     .form-group label {
       display: block;
       font-size: 0.78rem;
@@ -459,9 +454,7 @@
       font-size: 0.88rem;
       outline: none;
     }
-    .form-control:focus {
-      border-color: var(--accent-red);
-    }
+    .form-control:focus { border-color: var(--accent-red); }
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -475,18 +468,16 @@
       border-radius: 4px;
     }
     body.is-admin .add-btn,
-    body.is-admin .delete-btn {
-      display: inline-block;
-    }
+    body.is-admin .delete-btn { display: inline-block; }
 
     @media (max-width: 860px) {
       .antigravity-card {
         grid-template-columns: 1fr;
-        padding: 26px 20px;
-        gap: 30px;
+        padding: 24px 18px;
+        gap: 28px;
       }
-      .hero-title { font-size: 2.5rem; }
-      .avatar-frame { width: 270px; height: 340px; margin: 0 auto; }
+      .hero-title { font-size: 2.4rem; }
+      .avatar-frame { width: 260px; height: 330px; margin: 0 auto; }
       .chips-group { justify-content: flex-start; }
     }
   </style>
@@ -509,7 +500,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
-    const rootRef = ref(db, 'portfolio_data_antigravity_v1');
+    const rootRef = ref(db, 'portfolio_data_final_v1');
 
     let state = {
       profile: {
@@ -571,12 +562,28 @@
       document.getElementById('p-name').innerText = state.profile.name || "";
       document.getElementById('p-subtag').innerText = state.profile.subtag || "";
       document.getElementById('p-bio').innerText = state.profile.bio || "";
-      document.getElementById('p-email').innerText = state.profile.email || "";
-      document.getElementById('p-phone').innerText = state.profile.phone || "";
-      document.getElementById('p-github').innerText = "GitHub: " + (state.profile.github || "");
-      document.getElementById('p-linkedin').innerText = "LinkedIn: " + (state.profile.linkedin || "");
-      document.getElementById('p-location').innerText = state.profile.location || "";
+      document.getElementById('p-location').innerText = `📍 ${state.profile.location || 'Vizag / Machilipatnam'}`;
       document.getElementById('p-role').innerText = state.profile.role || "";
+
+      // Clickable direct redirects
+      const emailEl = document.getElementById('p-email');
+      emailEl.href = `mailto:${state.profile.email || 'koppisettinani69@gmail.com'}`;
+      emailEl.innerText = `✉️ ${state.profile.email || 'koppisettinani69@gmail.com'}`;
+
+      const phoneClean = (state.profile.phone || '+918328022844').replace(/\s+/g, '');
+      const phoneEl = document.getElementById('p-phone');
+      phoneEl.href = `tel:${phoneClean}`;
+      phoneEl.innerText = `📞 ${state.profile.phone || '+91 8328022844'}`;
+
+      const ghUser = (state.profile.github || 'nani69-hub').replace(/^https?:\/\/github\.com\//, '');
+      const ghEl = document.getElementById('p-github');
+      ghEl.href = `https://github.com/${ghUser}`;
+      ghEl.innerText = `🐙 GitHub: ${ghUser}`;
+
+      const liUser = (state.profile.linkedin || 'nani-koppisetti').replace(/^https?:\/\/([a-z]+\.)?linkedin\.com\/in\//, '');
+      const liEl = document.getElementById('p-linkedin');
+      liEl.href = `https://www.linkedin.com/in/${liUser}`;
+      liEl.innerText = `💼 LinkedIn: ${liUser}`;
 
       renderSectionGrid('jobs-grid', state.jobs, 'jobs');
       renderSectionGrid('internships-grid', state.internships, 'internships');
@@ -638,7 +645,7 @@
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
         adminBtn.style.display = 'none';
         saveBtn.style.display = 'inline-block';
-        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nYou can edit text, click '+ Add' buttons, or delete cards.");
+        alert("✅ Cloud Authentication Successful! Admin Mode ON.");
       } catch (err) {
         alert("❌ Authentication failed: " + err.message);
       }
@@ -649,9 +656,7 @@
       state.profile.name = document.getElementById('p-name').innerText;
       state.profile.subtag = document.getElementById('p-subtag').innerText;
       state.profile.bio = document.getElementById('p-bio').innerText;
-      state.profile.email = document.getElementById('p-email').innerText;
-      state.profile.phone = document.getElementById('p-phone').innerText;
-      state.profile.location = document.getElementById('p-location').innerText;
+      state.profile.location = document.getElementById('p-location').innerText.replace(/^📍\s*/, '');
       state.profile.role = document.getElementById('p-role').innerText;
 
       document.querySelectorAll('.grid-item .editable').forEach(el => {
@@ -743,18 +748,18 @@
 </head>
 <body>
 
-  <!-- Ambient Antigravity Lighting -->
   <div class="glow-bg">
     <div class="glow-1"></div>
     <div class="glow-2"></div>
   </div>
   <div class="spotlight-overlay" id="spotlight"></div>
 
-  <!-- Navigation -->
+  <!-- Header -->
   <nav>
     <div class="brand">
-      <span class="brand-triangle">▲</span>
-      <span>Antigravity</span>
+      <span class="brand-mark"></span>
+      <span class="brand-text">K. NANI</span>
+      <span class="brand-tag">DEV</span>
     </div>
     <div class="nav-btns">
       <button class="btn btn-admin" id="admin-btn">⚙️ Admin Mode</button>
@@ -763,11 +768,10 @@
   </nav>
 
   <div class="container">
-    <!-- ANTIGRAVITY HERO GLASS CARD -->
+    <!-- Antigravity Cockpit Glass Card -->
     <header class="hero-wrapper">
       <div class="antigravity-card">
         
-        <!-- Left Side: Content & Typography -->
         <div class="hero-content">
           <div class="role-badge">
             <span class="red-dot"></span>
@@ -786,16 +790,16 @@
             2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
           </p>
 
+          <!-- Direct Working Clickable Redirects -->
           <div class="chips-group">
-            <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
-            <span class="chip editable" id="p-phone">+91 8328022844</span>
-            <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
-            <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
-            <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
+            <a id="p-email" class="chip-link" href="mailto:koppisettinani69@gmail.com">✉️ koppisettinani69@gmail.com</a>
+            <a id="p-phone" class="chip-link" href="tel:+918328022844">📞 +91 8328022844</a>
+            <a id="p-github" class="chip-link" target="_blank" rel="noopener noreferrer" href="https://github.com/nani69-hub">🐙 GitHub: nani69-hub</a>
+            <a id="p-linkedin" class="chip-link" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/nani-koppisetti">💼 LinkedIn: nani-koppisetti</a>
+            <span class="chip-link" id="p-location">📍 Vizag / Machilipatnam</span>
           </div>
         </div>
 
-        <!-- Right Side: Integrated 3D Interactive Cyber Avatar -->
         <div class="hero-visual">
           <div class="avatar-frame" id="card">
             <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
@@ -809,7 +813,7 @@
       </div>
     </header>
 
-    <!-- 1. Work & Job Experience Section -->
+    <!-- Work Experience -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Work & Job Experience</h2>
@@ -818,7 +822,7 @@
       <div class="grid" id="jobs-grid"></div>
     </section>
 
-    <!-- 2. Internships Section -->
+    <!-- Internships -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Internships & Industrial Training</h2>
@@ -827,7 +831,7 @@
       <div class="grid" id="internships-grid"></div>
     </section>
 
-    <!-- 3. Certifications Section -->
+    <!-- Certifications -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Certifications & Credentials</h2>
@@ -836,7 +840,7 @@
       <div class="grid" id="certificates-grid"></div>
     </section>
 
-    <!-- 4. Projects Section -->
+    <!-- Projects -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Projects & Builds</h2>
@@ -845,7 +849,7 @@
       <div class="grid" id="projects-grid"></div>
     </section>
 
-    <!-- 5. Technical Expertise (Skills) -->
+    <!-- Skills -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Technical Expertise</h2>
@@ -854,7 +858,7 @@
       <div class="grid" id="skills-grid"></div>
     </section>
 
-    <!-- 6. Education Section -->
+    <!-- Education -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Education & Credentials</h2>
@@ -864,25 +868,25 @@
     </section>
   </div>
 
-  <!-- Modal for Adding Items -->
+  <!-- Add Item Modal -->
   <div class="modal-backdrop" id="add-modal">
     <div class="modal-box">
       <h3 class="modal-title" id="modal-title">Add Item</h3>
       <div class="form-group">
         <label>Title / Header</label>
-        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. PCB Design Specialist / Embedded Intern">
+        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. PCB Design Specialist">
       </div>
       <div class="form-group">
         <label>Description / Details</label>
-        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Role, company name, key learnings..."></textarea>
+        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Role details, learnings..."></textarea>
       </div>
       <div class="form-group" id="img-group">
-        <label>Certificate Image URL (Direct ImgBB link, file name, etc.)</label>
+        <label>Certificate Image URL</label>
         <input type="text" class="form-control" id="item-img-input" placeholder="https://i.ibb.co/.../cert.jpg">
       </div>
       <div class="form-group">
         <label>Tag / Category</label>
-        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, Hardware, SBTET">
+        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, Hardware">
       </div>
       <div class="modal-actions">
         <button class="btn btn-admin" id="modal-cancel">Cancel</button>
@@ -891,7 +895,6 @@
     </div>
   </div>
 
-  <!-- Dynamic Cursor Spotlight & 3D Tilt Script -->
   <script>
     const spotlight = document.getElementById('spotlight');
     const card = document.getElementById('card');
