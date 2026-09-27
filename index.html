@@ -6,24 +6,24 @@
   <title>Koppisetti Nani — Systems & Web Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #090d16;
-      --card-bg: rgba(17, 24, 39, 0.55);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --accent: #00f2fe;
-      --accent-muted: rgba(0, 242, 254, 0.12);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
+      --bg: #07090e;
+      --card-bg: rgba(14, 18, 27, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent-red: #ff2a5f;
+      --accent-cyan: #00f2fe;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     body {
@@ -33,6 +33,37 @@
       line-height: 1.5;
     }
 
+    /* Ambient Antigravity Neon Glows */
+    .glow-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .glow-1 {
+      position: absolute;
+      top: -10%;
+      right: 15%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(255, 42, 95, 0.16) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+    .glow-2 {
+      position: absolute;
+      top: 25%;
+      left: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
+      filter: blur(90px);
+    }
+
+    /* Interactive Cursor Spotlight */
     .spotlight-overlay {
       position: fixed;
       top: 0;
@@ -41,53 +72,64 @@
       height: 100vh;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.06), transparent 80%);
+      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 50%), rgba(255, 42, 95, 0.05), transparent 80%);
     }
 
+    /* Antigravity Nav */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 14px 8%;
+      padding: 16px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(9, 13, 22, 0.85);
-      backdrop-filter: blur(16px);
+      background: rgba(7, 9, 14, 0.82);
+      backdrop-filter: blur(20px);
       z-index: 100;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--glass-border);
     }
     .brand {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
       font-size: 1.25rem;
       letter-spacing: -0.5px;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .brand span { color: var(--accent); }
+    .brand-triangle {
+      color: var(--accent-cyan);
+      font-size: 1.1rem;
+    }
+    .brand span {
+      background: linear-gradient(135deg, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     .nav-btns {
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     .btn {
-      padding: 7px 15px;
+      padding: 8px 16px;
       font-size: 0.82rem;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
       border: none;
     }
     .btn-admin {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       color: #fff;
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--glass-border);
     }
     .btn-admin:hover {
       background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
     }
     .btn-save {
       background: #10b981;
@@ -98,119 +140,153 @@
 
     .container {
       width: 90%;
-      max-width: 1020px;
+      max-width: 1060px;
       margin: 0 auto;
       position: relative;
       z-index: 2;
     }
 
-    /* CENTERED HERO */
-    .hero {
-      padding-top: 110px;
+    /* ANTIGRAVITY HERO GLASS CARD */
+    .hero-wrapper {
+      padding-top: 100px;
       padding-bottom: 40px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .profile-card-wrapper {
-      perspective: 1000px;
-      display: flex;
       justify-content: center;
-      margin-bottom: 26px;
-    }
-    .profile-card {
-      position: relative;
-      width: 320px;
-      height: 420px;
-      border-radius: 24px;
-      background: #0f172a;
-      border: 1px solid rgba(0, 242, 254, 0.25);
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.15s ease-out, box-shadow 0.2s ease;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.15);
-    }
-    .profile-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .card-footer {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      padding: 10px 14px;
-      background: rgba(9, 13, 22, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
     }
 
-    .status-badge {
+    .antigravity-card {
+      width: 100%;
+      background: rgba(13, 16, 26, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 36px 40px;
+      backdrop-filter: blur(30px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 42, 95, 0.12);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .antigravity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-red), var(--accent-cyan), transparent);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .role-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
-      background: var(--accent-muted);
-      border: 1px solid rgba(0, 242, 254, 0.25);
-      border-radius: 20px;
       font-size: 0.8rem;
-      color: var(--accent);
       font-weight: 600;
+      color: #cbd5e1;
       margin-bottom: 14px;
     }
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--accent);
+    .red-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-red);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent);
+      box-shadow: 0 0 10px var(--accent-red);
     }
 
-    h1 {
+    .hero-title {
       font-family: 'Syne', sans-serif;
-      font-size: 3.2rem;
+      font-size: 3.4rem;
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      margin-bottom: 14px;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 12px;
+      color: #fff;
     }
-    h1 span {
-      background: linear-gradient(135deg, #fff 30%, #9ca3af 100%);
+    .hero-title span {
+      background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .bio {
+    .hero-subtag {
+      color: var(--accent-red);
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .hero-bio {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       line-height: 1.6;
-      max-width: 680px;
-      margin: 0 auto 22px auto;
+      margin-bottom: 24px;
     }
 
     .chips-group {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
     .chip {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
-      padding: 7px 15px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      color: #e5e7eb;
+      border: 1px solid var(--glass-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      color: #e2e8f0;
       text-decoration: none;
+    }
+
+    /* Antigravity Avatar Visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .avatar-frame {
+      position: relative;
+      width: 310px;
+      height: 380px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #090c15;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .avatar-overlay-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      padding: 10px 14px;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
     }
 
     /* SECTIONS */
@@ -220,7 +296,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--glass-border);
       padding-bottom: 12px;
     }
     .section-title {
@@ -231,42 +307,43 @@
     }
     .add-btn {
       display: none;
-      background: var(--accent-muted);
-      border: 1px solid rgba(0, 242, 254, 0.35);
-      color: var(--accent);
+      background: rgba(255, 42, 95, 0.15);
+      border: 1px solid rgba(255, 42, 95, 0.4);
+      color: var(--accent-red);
       padding: 6px 14px;
-      border-radius: 6px;
+      border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
     }
-    .add-btn:hover { background: rgba(0, 242, 254, 0.22); }
+    .add-btn:hover { background: rgba(255, 42, 95, 0.25); }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 18px;
     }
     .grid-item {
       position: relative;
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 20px;
-      backdrop-filter: blur(8px);
-      transition: all 0.2s;
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      transition: all 0.25s ease;
       text-align: left;
       display: flex;
       flex-direction: column;
     }
     .grid-item:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     }
     .grid-item h3 {
       font-size: 1.05rem;
       font-weight: 600;
-      color: #f9fafb;
+      color: #f8fafc;
       margin-bottom: 6px;
     }
     .grid-item p {
@@ -275,12 +352,12 @@
       line-height: 1.55;
     }
 
-    /* CERTIFICATE IMAGE PREVIEW */
+    /* CERTIFICATE IMAGE CONTAINER */
     .cert-img-container {
       width: 100%;
-      height: 160px;
-      margin: 12px 0;
-      border-radius: 8px;
+      height: 165px;
+      margin: 14px 0;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: #000;
@@ -300,10 +377,10 @@
       position: absolute;
       bottom: 8px;
       right: 8px;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(4px);
-      color: var(--accent);
-      padding: 3px 8px;
+      color: var(--accent-cyan);
+      padding: 3px 9px;
       border-radius: 6px;
       font-size: 0.7rem;
       font-weight: 600;
@@ -314,11 +391,11 @@
       display: inline-block;
       margin-top: auto;
       font-size: 0.72rem;
-      color: var(--accent);
-      background: var(--accent-muted);
-      padding: 3px 9px;
-      border-radius: 4px;
-      font-weight: 500;
+      color: var(--accent-cyan);
+      background: rgba(0, 242, 254, 0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
       width: fit-content;
     }
     .delete-btn {
@@ -339,8 +416,8 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
       z-index: 200;
       display: none;
       align-items: center;
@@ -351,9 +428,9 @@
       max-width: 440px;
       background: #0f172a;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
       text-align: left;
     }
     .modal-title {
@@ -375,7 +452,7 @@
     .form-control {
       width: 100%;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--glass-border);
       border-radius: 8px;
       padding: 9px 12px;
       color: #fff;
@@ -383,7 +460,7 @@
       outline: none;
     }
     .form-control:focus {
-      border-color: var(--accent);
+      border-color: var(--accent-red);
     }
     .modal-actions {
       display: flex;
@@ -393,8 +470,8 @@
     }
 
     body.is-admin [contenteditable="true"] {
-      outline: 1.5px dashed var(--accent) !important;
-      background: rgba(0, 242, 254, 0.06);
+      outline: 1.5px dashed var(--accent-red) !important;
+      background: rgba(255, 42, 95, 0.08);
       border-radius: 4px;
     }
     body.is-admin .add-btn,
@@ -402,9 +479,15 @@
       display: inline-block;
     }
 
-    @media (max-width: 600px) {
-      .profile-card { width: 280px; height: 370px; }
-      h1 { font-size: 2.3rem; }
+    @media (max-width: 860px) {
+      .antigravity-card {
+        grid-template-columns: 1fr;
+        padding: 26px 20px;
+        gap: 30px;
+      }
+      .hero-title { font-size: 2.5rem; }
+      .avatar-frame { width: 270px; height: 340px; margin: 0 auto; }
+      .chips-group { justify-content: flex-start; }
     }
   </style>
 
@@ -426,12 +509,13 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
-    const rootRef = ref(db, 'portfolio_data_v6');
+    const rootRef = ref(db, 'portfolio_data_antigravity_v1');
 
     let state = {
       profile: {
-        badge: "ECE Undergrad & Systems Developer",
+        badge: "Systems & Web Developer",
         name: "Koppisetti Nani",
+        subtag: "Crafting hardware systems & interactive web experiences.",
         bio: "2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.",
         email: "koppisettinani69@gmail.com",
         phone: "+91 8328022844",
@@ -441,7 +525,7 @@
         role: "Systems & Web Dev"
       },
       jobs: [
-        { id: "j1", title: "Junior Hardware Associate", body: "PCB Testing, circuit debugging, and sensor interfacing tests.", tag: "Full-Time / Part-Time", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop" }
+        { id: "j1", title: "Junior Hardware Associate", body: "PCB Testing, circuit debugging, and sensor interfacing tests.", tag: "Work Experience", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop" }
       ],
       internships: [
         { id: "i1", title: "Embedded Systems & IoT Intern", body: "Hands-on experience in circuit assembly, microcontroller programming, and interfacing sensors.", tag: "Internship", img: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&auto=format&fit=crop" }
@@ -460,7 +544,7 @@
         { id: "s4", title: "Web Technologies", body: "HTML5, CSS3, modern JavaScript, interactive WebGL, and Cloud databases.", tag: "Software" }
       ],
       education: [
-        { id: "e1", title: "B.Tech in ECE (2nd Year)", body: "Krishna University, Machilipatnam", tag: "Pursuing (2024 - Present)" },
+        { id: "e1", title: "B.Tech in ECE (2nd Year)", body: "Krishna University, Machilipatnam", tag: "Pursuing (2026 - Present)" },
         { id: "e2", title: "Diploma in ECE", body: "Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)", tag: "84% Aggregate (2023 - 2026)" },
         { id: "e3", title: "Secondary School (SSC)", body: "Sri Bhavani Vidyanikethan EM School", tag: "88.1% (2023)" }
       ]
@@ -485,6 +569,7 @@
     function renderAll() {
       document.getElementById('p-badge').innerText = state.profile.badge || "";
       document.getElementById('p-name').innerText = state.profile.name || "";
+      document.getElementById('p-subtag').innerText = state.profile.subtag || "";
       document.getElementById('p-bio').innerText = state.profile.bio || "";
       document.getElementById('p-email').innerText = state.profile.email || "";
       document.getElementById('p-phone').innerText = state.profile.phone || "";
@@ -520,7 +605,7 @@
         if (item.img) {
           imgHtml = `
             <div class="cert-img-container" onclick="window.open('${item.img}', '_blank')">
-              <img src="${item.img}" alt="Certificate Preview" onerror="this.src='https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&auto=format&fit=crop'">
+              <img src="${item.img}" alt="Certificate" onerror="this.src='https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&auto=format&fit=crop'">
               <span class="view-cert-badge">🔍 View Full Certificate</span>
             </div>
           `;
@@ -553,7 +638,7 @@
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
         adminBtn.style.display = 'none';
         saveBtn.style.display = 'inline-block';
-        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nYou can now see '+ Add' buttons for Jobs, Internships, Certificates, Projects, Skills & Education.");
+        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nYou can edit text, click '+ Add' buttons, or delete cards.");
       } catch (err) {
         alert("❌ Authentication failed: " + err.message);
       }
@@ -562,6 +647,7 @@
     saveBtn.addEventListener('click', () => {
       state.profile.badge = document.getElementById('p-badge').innerText;
       state.profile.name = document.getElementById('p-name').innerText;
+      state.profile.subtag = document.getElementById('p-subtag').innerText;
       state.profile.bio = document.getElementById('p-bio').innerText;
       state.profile.email = document.getElementById('p-email').innerText;
       state.profile.phone = document.getElementById('p-phone').innerText;
@@ -615,7 +701,6 @@
         inputImg.value = '';
         inputTag.value = '';
 
-        // Show image input for certificates, jobs, and internships
         if (targetSection === 'certificates' || targetSection === 'jobs' || targetSection === 'internships') {
           imgGroup.style.display = 'block';
         } else {
@@ -658,10 +743,19 @@
 </head>
 <body>
 
+  <!-- Ambient Antigravity Lighting -->
+  <div class="glow-bg">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+  </div>
   <div class="spotlight-overlay" id="spotlight"></div>
 
+  <!-- Navigation -->
   <nav>
-    <div class="brand">K. <span>NANI</span></div>
+    <div class="brand">
+      <span class="brand-triangle">▲</span>
+      <span>Antigravity</span>
+    </div>
     <div class="nav-btns">
       <button class="btn btn-admin" id="admin-btn">⚙️ Admin Mode</button>
       <button class="btn btn-save" id="save-btn">💾 Save Changes</button>
@@ -669,39 +763,53 @@
   </nav>
 
   <div class="container">
-    <!-- CENTER HERO SECTION -->
-    <header class="hero">
-      <div class="profile-card-wrapper">
-        <div class="profile-card" id="card">
-          <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
-          <div class="card-footer">
-            <span class="editable" id="p-role">Systems & Web Dev</span>
-            <span style="color: #10b981; font-weight: 600;">● Active</span>
+    <!-- ANTIGRAVITY HERO GLASS CARD -->
+    <header class="hero-wrapper">
+      <div class="antigravity-card">
+        
+        <!-- Left Side: Content & Typography -->
+        <div class="hero-content">
+          <div class="role-badge">
+            <span class="red-dot"></span>
+            <span class="editable" id="p-badge">Systems & Web Developer</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="editable" id="p-name">Koppisetti Nani</span>
+          </h1>
+
+          <div class="hero-subtag editable" id="p-subtag">
+            Crafting hardware systems & interactive web experiences.
+          </div>
+
+          <p class="hero-bio editable" id="p-bio">
+            2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
+          </p>
+
+          <div class="chips-group">
+            <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
+            <span class="chip editable" id="p-phone">+91 8328022844</span>
+            <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
+            <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
+            <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
           </div>
         </div>
-      </div>
 
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span class="editable" id="p-badge">ECE Undergrad & Systems Developer</span>
-      </div>
+        <!-- Right Side: Integrated 3D Interactive Cyber Avatar -->
+        <div class="hero-visual">
+          <div class="avatar-frame" id="card">
+            <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
+            <div class="avatar-overlay-badge">
+              <span class="editable" id="p-role">Systems & Web Dev</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">● Active</span>
+            </div>
+          </div>
+        </div>
 
-      <h1>Hi, I'm <span class="editable" id="p-name">Koppisetti Nani</span></h1>
-
-      <p class="bio editable" id="p-bio">
-        2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
-      </p>
-
-      <div class="chips-group">
-        <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
-        <span class="chip editable" id="p-phone">+91 8328022844</span>
-        <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
-        <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
-        <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
       </div>
     </header>
 
-    <!-- 1. Job Experience Section -->
+    <!-- 1. Work & Job Experience Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Work & Job Experience</h2>
@@ -719,7 +827,7 @@
       <div class="grid" id="internships-grid"></div>
     </section>
 
-    <!-- 3. Certificates Section (With actual images) -->
+    <!-- 3. Certifications Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Certifications & Credentials</h2>
@@ -737,7 +845,7 @@
       <div class="grid" id="projects-grid"></div>
     </section>
 
-    <!-- 5. Skills Section -->
+    <!-- 5. Technical Expertise (Skills) -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Technical Expertise</h2>
@@ -756,7 +864,7 @@
     </section>
   </div>
 
-  <!-- Add Item Modal -->
+  <!-- Modal for Adding Items -->
   <div class="modal-backdrop" id="add-modal">
     <div class="modal-box">
       <h3 class="modal-title" id="modal-title">Add Item</h3>
@@ -769,12 +877,12 @@
         <textarea rows="3" class="form-control" id="item-body-input" placeholder="Role, company name, key learnings..."></textarea>
       </div>
       <div class="form-group" id="img-group">
-        <label>Certificate Image URL (Imgur link, Drive direct link, or image path)</label>
-        <input type="text" class="form-control" id="item-img-input" placeholder="https://example.com/certificate.jpg">
+        <label>Certificate Image URL (Direct ImgBB link, file name, etc.)</label>
+        <input type="text" class="form-control" id="item-img-input" placeholder="https://i.ibb.co/.../cert.jpg">
       </div>
       <div class="form-group">
         <label>Tag / Category</label>
-        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, Hardware, Verified">
+        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, Hardware, SBTET">
       </div>
       <div class="modal-actions">
         <button class="btn btn-admin" id="modal-cancel">Cancel</button>
@@ -783,6 +891,7 @@
     </div>
   </div>
 
+  <!-- Dynamic Cursor Spotlight & 3D Tilt Script -->
   <script>
     const spotlight = document.getElementById('spotlight');
     const card = document.getElementById('card');
@@ -796,8 +905,8 @@
       const rect = card.getBoundingClientRect();
       const x = clientX - rect.left - rect.width / 2;
       const y = clientY - rect.top - rect.height / 2;
-      const rX = -(y / rect.height) * 14;
-      const rY = (x / rect.width) * 14;
+      const rX = -(y / rect.height) * 12;
+      const rY = (x / rect.width) * 12;
       card.style.transform = `perspective(800px) rotateX(${rX}deg) rotateY(${rY}deg)`;
     }
 
