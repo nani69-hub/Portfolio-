@@ -33,7 +33,6 @@
       line-height: 1.5;
     }
 
-    /* Ambient cursor spotlight glow */
     .spotlight-overlay {
       position: fixed;
       top: 0;
@@ -42,10 +41,9 @@
       height: 100vh;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.05), transparent 80%);
+      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.06), transparent 80%);
     }
 
-    /* Top Navigation */
     nav {
       position: fixed;
       top: 0;
@@ -106,90 +104,33 @@
       z-index: 2;
     }
 
-    /* Hero Section */
+    /* CENTERED HERO */
     .hero {
       padding-top: 110px;
-      padding-bottom: 50px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px;
-      background: var(--accent-muted);
-      border: 1px solid rgba(0, 242, 254, 0.25);
-      border-radius: 20px;
-      font-size: 0.78rem;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent);
-    }
-
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: 3rem;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-    h1 span {
-      background: linear-gradient(135deg, #fff 30%, #9ca3af 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .bio {
-      color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    .chips-group {
+      padding-bottom: 40px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .chip {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
-      padding: 6px 13px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      color: #e5e7eb;
-      text-decoration: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
-    /* Profile Display */
     .profile-card-wrapper {
       perspective: 1000px;
       display: flex;
       justify-content: center;
+      margin-bottom: 26px;
     }
     .profile-card {
       position: relative;
-      width: 290px;
-      height: 380px;
-      border-radius: 20px;
+      width: 320px;
+      height: 420px;
+      border-radius: 24px;
       background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.25);
       overflow: hidden;
       transform-style: preserve-3d;
-      transition: transform 0.2s ease-out, box-shadow 0.2s ease;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      transition: transform 0.15s ease-out, box-shadow 0.2s ease;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 254, 0.15);
     }
     .profile-card img {
       width: 100%;
@@ -213,19 +154,78 @@
       font-size: 0.8rem;
     }
 
-    /* Sections */
-    section { padding: 40px 0; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--accent-muted);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #fff 30%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bio {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto 22px auto;
+    }
+
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+
+    /* SECTIONS */
+    section { padding: 36px 0; }
     .section-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       border-bottom: 1px solid var(--card-border);
       padding-bottom: 12px;
     }
     .section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #fff;
     }
@@ -234,15 +234,14 @@
       background: var(--accent-muted);
       border: 1px solid rgba(0, 242, 254, 0.35);
       color: var(--accent);
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 6px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
     }
-    .add-btn:hover { background: rgba(0, 242, 254, 0.2); }
+    .add-btn:hover { background: rgba(0, 242, 254, 0.22); }
 
-    /* Interactive Grids */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -256,6 +255,9 @@
       padding: 20px;
       backdrop-filter: blur(8px);
       transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
     }
     .grid-item:hover {
       border-color: rgba(255, 255, 255, 0.18);
@@ -272,15 +274,52 @@
       font-size: 0.88rem;
       line-height: 1.55;
     }
+
+    /* CERTIFICATE IMAGE PREVIEW */
+    .cert-img-container {
+      width: 100%;
+      height: 160px;
+      margin: 12px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #000;
+      position: relative;
+      cursor: pointer;
+    }
+    .cert-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .cert-img-container:hover img {
+      transform: scale(1.05);
+    }
+    .view-cert-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+    }
+
     .item-tag {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: auto;
       font-size: 0.72rem;
       color: var(--accent);
       background: var(--accent-muted);
       padding: 3px 9px;
       border-radius: 4px;
       font-weight: 500;
+      width: fit-content;
     }
     .delete-btn {
       position: absolute;
@@ -296,7 +335,7 @@
       display: none;
     }
 
-    /* Modal for Adding Items */
+    /* MODAL */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -315,6 +354,7 @@
       border-radius: 16px;
       padding: 24px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+      text-align: left;
     }
     .modal-title {
       font-family: 'Syne', sans-serif;
@@ -352,7 +392,6 @@
       margin-top: 20px;
     }
 
-    /* Admin mode markers */
     body.is-admin [contenteditable="true"] {
       outline: 1.5px dashed var(--accent) !important;
       background: rgba(0, 242, 254, 0.06);
@@ -363,20 +402,12 @@
       display: inline-block;
     }
 
-    @media (max-width: 820px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 90px;
-        text-align: center;
-        gap: 30px;
-      }
-      .profile-card { width: 260px; height: 340px; margin: 0 auto; }
-      .chips-group { justify-content: center; }
+    @media (max-width: 600px) {
+      .profile-card { width: 280px; height: 370px; }
       h1 { font-size: 2.3rem; }
     }
   </style>
 
-  <!-- Firebase Database & Authentication Engine -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
@@ -395,7 +426,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
-    const rootRef = ref(db, 'portfolio_data_v3');
+    const rootRef = ref(db, 'portfolio_data_v6');
 
     let state = {
       profile: {
@@ -409,15 +440,18 @@
         location: "Vizag / Machilipatnam",
         role: "Systems & Web Dev"
       },
+      jobs: [
+        { id: "j1", title: "Junior Hardware Associate", body: "PCB Testing, circuit debugging, and sensor interfacing tests.", tag: "Full-Time / Part-Time", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop" }
+      ],
+      internships: [
+        { id: "i1", title: "Embedded Systems & IoT Intern", body: "Hands-on experience in circuit assembly, microcontroller programming, and interfacing sensors.", tag: "Internship", img: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&auto=format&fit=crop" }
+      ],
+      certificates: [
+        { id: "c1", title: "PCB Design Fundamentals", body: "Certification on schematic layout, component placing, and board routing techniques.", tag: "Certification", img: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&auto=format&fit=crop" }
+      ],
       projects: [
         { id: "p1", title: "Anti-Sleep Alarm (Major Project)", body: "Safety unit using an IR blink sensor and Arduino Uno to detect drowsiness and trigger alert buzzers.", tag: "Embedded Systems" },
         { id: "p2", title: "Electricity from Garbage", body: "Energy conversion analysis studying anaerobic digestion of organic matter to biogas.", tag: "Renewable Energy" }
-      ],
-      internships: [
-        { id: "i1", title: "Embedded & IoT Trainee", body: "Worked on circuit assembly, sensor calibrations, and micro-controller programming for automated alert modules.", tag: "Industrial Training" }
-      ],
-      certificates: [
-        { id: "c1", title: "PCB Design Fundamentals", body: "Certified training on schematic capturing, trace layout rules, and component soldering techniques.", tag: "Hardware Certification" }
       ],
       skills: [
         { id: "s1", title: "Electronic Components", body: "Testing and analysis of passive/active elements, ICs, and relays.", tag: "Hardware" },
@@ -435,11 +469,11 @@
     let isAdmin = false;
     let targetSection = null;
 
-    // Realtime Cloud Synchronization Listener
     onValue(rootRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         state = data;
+        if (!state.jobs) state.jobs = [];
         if (!state.internships) state.internships = [];
         if (!state.certificates) state.certificates = [];
         renderAll();
@@ -449,7 +483,6 @@
     });
 
     function renderAll() {
-      // Profile sync
       document.getElementById('p-badge').innerText = state.profile.badge || "";
       document.getElementById('p-name').innerText = state.profile.name || "";
       document.getElementById('p-bio').innerText = state.profile.bio || "";
@@ -460,10 +493,10 @@
       document.getElementById('p-location').innerText = state.profile.location || "";
       document.getElementById('p-role').innerText = state.profile.role || "";
 
-      // All 5 Grids sync
-      renderSectionGrid('projects-grid', state.projects, 'projects');
+      renderSectionGrid('jobs-grid', state.jobs, 'jobs');
       renderSectionGrid('internships-grid', state.internships, 'internships');
       renderSectionGrid('certificates-grid', state.certificates, 'certificates');
+      renderSectionGrid('projects-grid', state.projects, 'projects');
       renderSectionGrid('skills-grid', state.skills, 'skills');
       renderSectionGrid('education-grid', state.education, 'education');
 
@@ -482,17 +515,28 @@
       items.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'grid-item';
+
+        let imgHtml = '';
+        if (item.img) {
+          imgHtml = `
+            <div class="cert-img-container" onclick="window.open('${item.img}', '_blank')">
+              <img src="${item.img}" alt="Certificate Preview" onerror="this.src='https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&auto=format&fit=crop'">
+              <span class="view-cert-badge">🔍 View Full Certificate</span>
+            </div>
+          `;
+        }
+
         div.innerHTML = `
           <button class="delete-btn" data-sec="${sectionKey}" data-idx="${index}">🗑 Delete</button>
           <h3 class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="title">${item.title}</h3>
           <p class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="body">${item.body}</p>
+          ${imgHtml}
           <span class="item-tag editable" data-sec="${sectionKey}" data-idx="${index}" data-field="tag">${item.tag || "General"}</span>
         `;
         container.appendChild(div);
       });
     }
 
-    // Direct Firebase Auth Verification
     const adminBtn = document.getElementById('admin-btn');
     const saveBtn = document.getElementById('save-btn');
 
@@ -509,13 +553,12 @@
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
         adminBtn.style.display = 'none';
         saveBtn.style.display = 'inline-block';
-        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nNow you can edit text directly, click '+ Add' for new items in Projects, Internships, Certificates, Skills & Education, or delete cards.");
+        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nYou can now see '+ Add' buttons for Jobs, Internships, Certificates, Projects, Skills & Education.");
       } catch (err) {
         alert("❌ Authentication failed: " + err.message);
       }
     });
 
-    // Save Changes to Firebase Realtime Database
     saveBtn.addEventListener('click', () => {
       state.profile.badge = document.getElementById('p-badge').innerText;
       state.profile.name = document.getElementById('p-name').innerText;
@@ -544,7 +587,6 @@
       }).catch(err => alert("⚠️ Error saving: " + err.message));
     });
 
-    // Delete Card Listener
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('delete-btn')) {
         const sec = e.target.getAttribute('data-sec');
@@ -556,12 +598,13 @@
       }
     });
 
-    // Add Modal Actions
     const modal = document.getElementById('add-modal');
     const modalTitle = document.getElementById('modal-title');
     const inputTitle = document.getElementById('item-title-input');
     const inputBody = document.getElementById('item-body-input');
+    const inputImg = document.getElementById('item-img-input');
     const inputTag = document.getElementById('item-tag-input');
+    const imgGroup = document.getElementById('img-group');
 
     document.querySelectorAll('.add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -569,7 +612,16 @@
         modalTitle.innerText = `Add New ${targetSection.toUpperCase()} Item`;
         inputTitle.value = '';
         inputBody.value = '';
+        inputImg.value = '';
         inputTag.value = '';
+
+        // Show image input for certificates, jobs, and internships
+        if (targetSection === 'certificates' || targetSection === 'jobs' || targetSection === 'internships') {
+          imgGroup.style.display = 'block';
+        } else {
+          imgGroup.style.display = 'none';
+        }
+
         modal.style.display = 'flex';
       });
     });
@@ -581,6 +633,7 @@
     document.getElementById('modal-save').addEventListener('click', () => {
       const title = inputTitle.value.trim();
       const body = inputBody.value.trim();
+      const img = inputImg.value.trim();
       const tag = inputTag.value.trim();
 
       if (!title) {
@@ -589,13 +642,15 @@
       }
 
       if (!state[targetSection]) state[targetSection] = [];
-      state[targetSection].push({
+      const newItem = {
         id: "item_" + Date.now(),
         title: title,
         body: body || "",
         tag: tag || "General"
-      });
+      };
+      if (img) newItem.img = img;
 
+      state[targetSection].push(newItem);
       modal.style.display = 'none';
       renderAll();
     });
@@ -603,10 +658,8 @@
 </head>
 <body>
 
-  <!-- Dynamic cursor spotlight overlay -->
   <div class="spotlight-overlay" id="spotlight"></div>
 
-  <!-- Navbar -->
   <nav>
     <div class="brand">K. <span>NANI</span></div>
     <div class="nav-btns">
@@ -616,28 +669,8 @@
   </nav>
 
   <div class="container">
-    <!-- Hero Section -->
+    <!-- CENTER HERO SECTION -->
     <header class="hero">
-      <div>
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          <span class="editable" id="p-badge">ECE Undergrad & Systems Developer</span>
-        </div>
-        <h1>Hi, I'm <span class="editable" id="p-name">Koppisetti Nani</span></h1>
-        <p class="bio editable" id="p-bio">
-          2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
-        </p>
-
-        <div class="chips-group">
-          <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
-          <span class="chip editable" id="p-phone">+91 8328022844</span>
-          <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
-          <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
-          <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
-        </div>
-      </div>
-
-      <!-- Minimalist Interactive Photo Card -->
       <div class="profile-card-wrapper">
         <div class="profile-card" id="card">
           <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
@@ -647,9 +680,55 @@
           </div>
         </div>
       </div>
+
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span class="editable" id="p-badge">ECE Undergrad & Systems Developer</span>
+      </div>
+
+      <h1>Hi, I'm <span class="editable" id="p-name">Koppisetti Nani</span></h1>
+
+      <p class="bio editable" id="p-bio">
+        2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
+      </p>
+
+      <div class="chips-group">
+        <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
+        <span class="chip editable" id="p-phone">+91 8328022844</span>
+        <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
+        <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
+        <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
+      </div>
     </header>
 
-    <!-- 1. Projects Section -->
+    <!-- 1. Job Experience Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Work & Job Experience</h2>
+        <button class="add-btn" data-section="jobs">+ Add Job Experience</button>
+      </div>
+      <div class="grid" id="jobs-grid"></div>
+    </section>
+
+    <!-- 2. Internships Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Internships & Industrial Training</h2>
+        <button class="add-btn" data-section="internships">+ Add Internship</button>
+      </div>
+      <div class="grid" id="internships-grid"></div>
+    </section>
+
+    <!-- 3. Certificates Section (With actual images) -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Certifications & Credentials</h2>
+        <button class="add-btn" data-section="certificates">+ Add Certificate</button>
+      </div>
+      <div class="grid" id="certificates-grid"></div>
+    </section>
+
+    <!-- 4. Projects Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Projects & Builds</h2>
@@ -658,25 +737,7 @@
       <div class="grid" id="projects-grid"></div>
     </section>
 
-    <!-- 2. Internships Section -->
-    <section>
-      <div class="section-bar">
-        <h2 class="section-title">Internships & Experience</h2>
-        <button class="add-btn" data-section="internships">+ Add Internship</button>
-      </div>
-      <div class="grid" id="internships-grid"></div>
-    </section>
-
-    <!-- 3. Certificates Section -->
-    <section>
-      <div class="section-bar">
-        <h2 class="section-title">Certifications & Achievements</h2>
-        <button class="add-btn" data-section="certificates">+ Add Certificate</button>
-      </div>
-      <div class="grid" id="certificates-grid"></div>
-    </section>
-
-    <!-- 4. Skills Section -->
+    <!-- 5. Skills Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Technical Expertise</h2>
@@ -685,7 +746,7 @@
       <div class="grid" id="skills-grid"></div>
     </section>
 
-    <!-- 5. Education Section -->
+    <!-- 6. Education Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Education & Credentials</h2>
@@ -701,15 +762,19 @@
       <h3 class="modal-title" id="modal-title">Add Item</h3>
       <div class="form-group">
         <label>Title / Header</label>
-        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. Embedded IoT Intern / AWS Certificate">
+        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. PCB Design Specialist / Embedded Intern">
       </div>
       <div class="form-group">
         <label>Description / Details</label>
-        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Organization name, what you worked on, or key learnings..."></textarea>
+        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Role, company name, key learnings..."></textarea>
+      </div>
+      <div class="form-group" id="img-group">
+        <label>Certificate Image URL (Imgur link, Drive direct link, or image path)</label>
+        <input type="text" class="form-control" id="item-img-input" placeholder="https://example.com/certificate.jpg">
       </div>
       <div class="form-group">
-        <label>Tag / Category / Year</label>
-        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, 3 Months, Hardware">
+        <label>Tag / Category</label>
+        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, Hardware, Verified">
       </div>
       <div class="modal-actions">
         <button class="btn btn-admin" id="modal-cancel">Cancel</button>
@@ -718,7 +783,6 @@
     </div>
   </div>
 
-  <!-- Smooth Cursor Spotlight & 3D Tilt Interaction -->
   <script>
     const spotlight = document.getElementById('spotlight');
     const card = document.getElementById('card');
