@@ -6,12 +6,12 @@
   <title>Koppisetti Nani — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #06080d;
-      --card-bg: rgba(13, 17, 25, 0.85);
+      --bg: #05070c;
+      --card-bg: rgba(11, 15, 23, 0.82);
       --glass-border: rgba(255, 255, 255, 0.08);
       --accent-red: #ff2a5f;
       --accent-cyan: #00f2fe;
@@ -33,7 +33,7 @@
       line-height: 1.5;
     }
 
-    /* Ambient Cockpit Neon Glows */
+    /* Ambient Background Lights */
     .glow-bg {
       position: fixed;
       inset: 0;
@@ -43,20 +43,20 @@
     .glow-1 {
       position: absolute;
       top: 5%;
-      right: 15%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255, 42, 95, 0.15) 0%, transparent 70%);
-      filter: blur(80px);
+      right: 10%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(255, 42, 95, 0.18) 0%, transparent 70%);
+      filter: blur(90px);
     }
     .glow-2 {
       position: absolute;
-      top: 30%;
-      left: 10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
-      filter: blur(90px);
+      top: 35%;
+      left: 5%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, transparent 70%);
+      filter: blur(100px);
     }
 
     .spotlight-overlay {
@@ -64,7 +64,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(255, 42, 95, 0.05), transparent 80%);
+      background: radial-gradient(650px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.06), transparent 80%);
     }
 
     /* Navbar */
@@ -77,50 +77,47 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(6, 8, 13, 0.85);
+      background: rgba(5, 7, 12, 0.88);
       backdrop-filter: blur(20px);
       z-index: 100;
       border-bottom: 1px solid var(--glass-border);
     }
+
+    /* Animated K. NANI Brand Name (No DEV tag) */
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
-      user-select: none;
     }
     .brand-mark {
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       background: var(--accent-red);
       border-radius: 50%;
-      box-shadow: 0 0 12px var(--accent-red), 0 0 24px rgba(255, 42, 95, 0.6);
+      box-shadow: 0 0 14px var(--accent-red), 0 0 28px rgba(255, 42, 95, 0.7);
       animation: pulseGlow 2s infinite ease-in-out;
     }
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px #00f2fe); }
+      0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 14px var(--accent-red); }
+      50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 20px #00f2fe; }
     }
     .brand-text {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #ffffff 0%, #00f2fe 55%, #ff2a5f 100%);
+      font-size: 1.45rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, #ffffff, #00f2fe, #ff2a5f, #ffffff);
+      background-size: 300% 100%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: gradientFlow 5s ease infinite;
       text-transform: uppercase;
     }
-    .brand-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--accent-cyan);
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.3);
-      padding: 2px 7px;
-      border-radius: 6px;
-      text-transform: uppercase;
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .nav-btns { display: flex; gap: 10px; }
@@ -152,19 +149,19 @@
       z-index: 2;
     }
 
-    /* Antigravity Glass Card */
+    /* Cockpit Main Card */
     .hero-wrapper {
       padding-top: 96px;
       padding-bottom: 30px;
     }
     .antigravity-card {
       width: 100%;
-      background: rgba(14, 18, 28, 0.88);
+      background: linear-gradient(135deg, rgba(14, 18, 28, 0.92) 0%, rgba(8, 11, 18, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 26px;
-      padding: 36px;
+      border-radius: 28px;
+      padding: 40px;
       backdrop-filter: blur(30px);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 42, 95, 0.12);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 42, 95, 0.12);
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
@@ -182,51 +179,43 @@
       background: linear-gradient(90deg, transparent, var(--accent-red), var(--accent-cyan), transparent);
     }
 
-    .role-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #cbd5e1;
-      margin-bottom: 12px;
-    }
-    .red-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-red);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent-red);
-    }
-
+    /* Animated Big Name */
     .hero-title {
       font-family: 'Syne', sans-serif;
-      font-size: 3.2rem;
-      font-weight: 800;
+      font-size: 3.4rem;
+      font-weight: 900;
       line-height: 1.05;
-      letter-spacing: -1.5px;
-      margin-bottom: 10px;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
     }
-    .hero-title span {
-      background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
+    .hero-title-text {
+      background: linear-gradient(90deg, #ffffff 0%, #00f2fe 35%, #ff2a5f 70%, #ffffff 100%);
+      background-size: 300% 100%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: heroNameFlow 6s ease infinite;
+      filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.25));
+    }
+    @keyframes heroNameFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .hero-subtag {
       color: var(--accent-red);
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 14px;
     }
     .hero-bio {
       color: var(--text-muted);
       font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 22px;
+      line-height: 1.65;
+      margin-bottom: 24px;
     }
 
-    /* Clickable Link Chips */
+    /* Working Chips */
     .chips-group {
       display: flex;
       flex-wrap: wrap;
@@ -253,43 +242,41 @@
       transform: translateY(-2px);
     }
 
+    /* Seamless Blended Avatar */
     .hero-visual {
       position: relative;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
-    .avatar-frame {
+    .avatar-blend-container {
       position: relative;
-      width: 290px;
-      height: 360px;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: #090c15;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      width: 320px;
+      height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 24px;
+      /* Smooth feather gradient mask to seamlessly blend into background */
+      mask-image: radial-gradient(circle at center, black 65%, transparent 98%);
+      -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 98%);
       transform-style: preserve-3d;
       transition: transform 0.15s ease-out;
     }
-    .avatar-frame img {
+    .avatar-blend-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.35));
     }
-    .avatar-overlay-badge {
+    .avatar-glow-ring {
       position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      padding: 10px 14px;
-      background: rgba(9, 13, 22, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.78rem;
+      inset: 10px;
+      border-radius: 24px;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.2), 0 0 30px rgba(255, 42, 95, 0.15);
+      pointer-events: none;
     }
 
     /* Sections */
@@ -473,18 +460,18 @@
     @media (max-width: 860px) {
       .antigravity-card {
         grid-template-columns: 1fr;
-        padding: 24px 18px;
-        gap: 28px;
+        padding: 28px 20px;
+        gap: 24px;
       }
-      .hero-title { font-size: 2.4rem; }
-      .avatar-frame { width: 260px; height: 330px; margin: 0 auto; }
+      .hero-title { font-size: 2.5rem; }
+      .avatar-blend-container { width: 280px; height: 350px; margin: 0 auto; }
       .chips-group { justify-content: flex-start; }
     }
   </style>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -504,7 +491,6 @@
 
     let state = {
       profile: {
-        badge: "Systems & Web Developer",
         name: "Koppisetti Nani",
         subtag: "Crafting hardware systems & interactive web experiences.",
         bio: "2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.",
@@ -512,8 +498,7 @@
         phone: "+91 8328022844",
         github: "nani69-hub",
         linkedin: "nani-koppisetti",
-        location: "Vizag / Machilipatnam",
-        role: "Systems & Web Dev"
+        location: "Vizag / Machilipatnam"
       },
       jobs: [
         { id: "j1", title: "Junior Hardware Associate", body: "PCB Testing, circuit debugging, and sensor interfacing tests.", tag: "Work Experience", img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop" }
@@ -558,14 +543,11 @@
     });
 
     function renderAll() {
-      document.getElementById('p-badge').innerText = state.profile.badge || "";
-      document.getElementById('p-name').innerText = state.profile.name || "";
+      document.getElementById('p-name').innerText = state.profile.name || "Koppisetti Nani";
       document.getElementById('p-subtag').innerText = state.profile.subtag || "";
       document.getElementById('p-bio').innerText = state.profile.bio || "";
       document.getElementById('p-location').innerText = `📍 ${state.profile.location || 'Vizag / Machilipatnam'}`;
-      document.getElementById('p-role').innerText = state.profile.role || "";
 
-      // Clickable direct redirects
       const emailEl = document.getElementById('p-email');
       emailEl.href = `mailto:${state.profile.email || 'koppisettinani69@gmail.com'}`;
       emailEl.innerText = `✉️ ${state.profile.email || 'koppisettinani69@gmail.com'}`;
@@ -652,12 +634,10 @@
     });
 
     saveBtn.addEventListener('click', () => {
-      state.profile.badge = document.getElementById('p-badge').innerText;
       state.profile.name = document.getElementById('p-name').innerText;
       state.profile.subtag = document.getElementById('p-subtag').innerText;
       state.profile.bio = document.getElementById('p-bio').innerText;
       state.profile.location = document.getElementById('p-location').innerText.replace(/^📍\s*/, '');
-      state.profile.role = document.getElementById('p-role').innerText;
 
       document.querySelectorAll('.grid-item .editable').forEach(el => {
         const sec = el.getAttribute('data-sec');
@@ -754,12 +734,11 @@
   </div>
   <div class="spotlight-overlay" id="spotlight"></div>
 
-  <!-- Header -->
+  <!-- Header with Clean Glowing K. NANI -->
   <nav>
     <div class="brand">
       <span class="brand-mark"></span>
       <span class="brand-text">K. NANI</span>
-      <span class="brand-tag">DEV</span>
     </div>
     <div class="nav-btns">
       <button class="btn btn-admin" id="admin-btn">⚙️ Admin Mode</button>
@@ -768,18 +747,14 @@
   </nav>
 
   <div class="container">
-    <!-- Antigravity Cockpit Glass Card -->
+    <!-- Antigravity Cockpit Card -->
     <header class="hero-wrapper">
       <div class="antigravity-card">
         
         <div class="hero-content">
-          <div class="role-badge">
-            <span class="red-dot"></span>
-            <span class="editable" id="p-badge">Systems & Web Developer</span>
-          </div>
-
+          <!-- Animated Bold Name -->
           <h1 class="hero-title">
-            <span class="editable" id="p-name">Koppisetti Nani</span>
+            <span class="hero-title-text editable" id="p-name">Koppisetti Nani</span>
           </h1>
 
           <div class="hero-subtag editable" id="p-subtag">
@@ -800,13 +775,11 @@
           </div>
         </div>
 
+        <!-- Seamless Blended Avatar -->
         <div class="hero-visual">
-          <div class="avatar-frame" id="card">
-            <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
-            <div class="avatar-overlay-badge">
-              <span class="editable" id="p-role">Systems & Web Dev</span>
-              <span style="color: var(--accent-cyan); font-weight: 600;">● Active</span>
-            </div>
+          <div class="avatar-blend-container" id="card">
+            <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Avatar">
+            <div class="avatar-glow-ring"></div>
           </div>
         </div>
 
@@ -908,9 +881,9 @@
       const rect = card.getBoundingClientRect();
       const x = clientX - rect.left - rect.width / 2;
       const y = clientY - rect.top - rect.height / 2;
-      const rX = -(y / rect.height) * 12;
-      const rY = (x / rect.width) * 12;
-      card.style.transform = `perspective(800px) rotateX(${rX}deg) rotateY(${rY}deg)`;
+      const rX = -(y / rect.height) * 14;
+      const rY = (x / rect.width) * 14;
+      card.style.transform = `perspective(900px) rotateX(${rX}deg) rotateY(${rY}deg) scale3d(1.02, 1.02, 1.02)`;
     }
 
     card.addEventListener('mousemove', (e) => tiltCard(e.clientX, e.clientY));
@@ -918,10 +891,10 @@
       if (e.touches.length > 0) tiltCard(e.touches[0].clientX, e.touches[0].clientY);
     });
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     });
     card.addEventListener('touchend', () => {
-      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     });
   </script>
 </body>
