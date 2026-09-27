@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koppisetti Nani | ECE & Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    body {
+      background-color: #050711;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    .bg-glow-1, .bg-glow-2 {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      filter: blur(90px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-glow-1 { top: 10%; left: 5%; background: radial-gradient(circle, rgba(0, 242, 254, 0.12), transparent 70%); }
+    .bg-glow-2 { bottom: 10%; right: 5%; background: radial-gradient(circle, rgba(147, 51, 234, 0.15), transparent 70%); }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 7, 17, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #00f2fe; }
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #00f2fe; }
+    .admin-nav {
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      padding: 6px 14px;
+      border-radius: 12px;
+    }
+
+    .container {
+      width: 88%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+      padding-top: 100px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      color: #00f2fe;
+      border-radius: 20px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    h1 { font-size: 3.2rem; font-weight: 700; line-height: 1.15; margin-bottom: 15px; }
+    h1 span {
+      background: linear-gradient(135deg, #00f2fe, #4facfe, #9333ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle { color: #94a3b8; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
+    .contact-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: #00f2fe; color: #00f2fe; }
+
+    .card-stage { perspective: 1000px; display: flex; justify-content: center; }
+    .card-wrap {
+      position: relative;
+      width: 340px;
+      height: 460px;
+      border-radius: 24px;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .card-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #00f2fe, #9333ea);
+      z-index: 1;
+      opacity: 0.7;
+      filter: blur(8px);
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0b0f19;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 2;
+    }
+    .card-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0;
+      z-index: 3;
+    }
+
+    section { padding: 90px 0; }
+    .section-title { font-size: 2.2rem; margin-bottom: 35px; color: #fff; }
+    .section-title span { color: #00f2fe; }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: rgba(0, 242, 254, 0.5); }
+    .card h3 { font-size: 1.3rem; margin-bottom: 8px; color: #f8fafc; }
+    .card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
+    .card .tag {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: #00f2fe;
+      background: rgba(0, 242, 254, 0.1);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .contact-chips { justify-content: center; }
+      .card-wrap { width: 290px; height: 390px; margin: 0 auto; }
+      h1 { font-size: 2.3rem; }
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB-Y-VPSbaAUDYS06A3sdnRqklybn2CdDE",
+      authDomain: "portfolio-2d3b8.firebaseapp.com",
+      databaseURL: "https://portfolio-2d3b8-default-rtdb.firebaseio.com",
+      projectId: "portfolio-2d3b8",
+      storageBucket: "portfolio-2d3b8.firebasestorage.app",
+      messagingSenderId: "447114823764",
+      appId: "1:447114823764:web:4e128751c399cf67c145c1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const dynamicGrid = document.getElementById('dynamic-projects');
+    const projectsRef = ref(db, 'projects');
+
+    onValue(projectsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        Object.keys(data).reverse().forEach((key) => {
+          const item = data[key];
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <span class="tag">${item.category || 'Portfolio Entry'}</span>
+          `;
+          dynamicGrid.prepend(card);
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <nav>
+    <div class="logo">K. NANI</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="admin.html" class="admin-nav">Admin Portal</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero" id="about">
+      <div>
+        <span class="badge">ECE Undergrad & Tech Enthusiast</span>
+        <h1>Hi, I'm <span>Koppisetti Nani</span></h1>
+        <p class="subtitle">
+          Currently pursuing 2nd year B.Tech in Electronics and Communication Engineering (ECE) at <strong>Krishna University</strong>. Native of <strong>Vizag</strong> with strong practical knowledge in circuits, microcontrollers, and modern interactive web.
+        </p>
+
+        <div class="contact-chips">
+          <a href="mailto:koppisettinani69@gmail.com" class="chip">✉ koppisettinani69@gmail.com</a>
+          <a href="tel:8328022844" class="chip">📞 +91 8328022844</a>
+          <a href="https://github.com/nani69-hub" target="_blank" class="chip">🐙 GitHub: nani69-hub</a>
+          <a href="https://in.linkedin.com/in/nani-koppisetti" target="_blank" class="chip">🔗 LinkedIn: nani-koppisetti</a>
+          <span class="chip">📍 Vizag / Machilipatnam</span>
+        </div>
+      </div>
+
+      <div class="card-stage">
+        <div class="card-wrap" id="card">
+          <div class="card-inner">
+            <div class="glare" id="glare"></div>
+            <img src="avatar.png" alt="Koppisetti Nani Avatar" id="avatar-img" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2 class="section-title">Education <span>Journey</span></h2>
+      <div class="grid-cards">
+        <div class="card">
+          <h3>B.Tech in ECE (2nd Year)</h3>
+          <p><strong>Krishna University</strong>, Machilipatnam</p>
+          <span class="tag">Pursuing (2024 - Present)</span>
+        </div>
+        <div class="card">
+          <h3>Diploma in ECE[span_2](start_span)[span_2](end_span)</h3>
+          <p>Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)[span_3](start_span)[span_3](end_span)</p>
+          <span class="tag">84% Aggregate (2023 - 2026)[span_4](start_span)[span_4](end_span)</span>
+        </div>
+        <div class="card">
+          <h3>Secondary School (SSC)[span_5](start_span)[span_5](end_span)</h3>
+          <p>Sri Bhavani Vidyanikethan EM School[span_6](start_span)[span_6](end_span)</p>
+          <span class="tag">88.1% (2023)[span_7](start_span)[span_7](end_span)</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title">Technical <span>Skills</span></h2>
+      <div class="grid-cards">
+        <div class="card">
+          <h3>Electronic Components[span_8](start_span)[span_8](end_span)</h3>
+          <p>Working knowledge of Resistors, Capacitors, Inductors, Diodes, LEDs, Transistors, ICs, Relays & Switches[span_9](start_span)[span_9](end_span).</p>
+        </div>
+        <div class="card">
+          <h3>Microcontrollers & IoT[span_10](start_span)[span_10](end_span)</h3>
+          <p>Microcontroller concepts, Arduino Uno development, and sensor interface integration[span_11](start_span)[span_11](end_span).</p>
+        </div>
+        <div class="card">
+          <h3>PCB Design & Assembly[span_12](start_span)[span_12](end_span)</h3>
+          <p>Analog circuit design fundamentals, PCB design process awareness, soldering and desoldering[span_13](start_span)[span_13](end_span).</p>
+        </div>
+        <div class="card">
+          <h3>Computer & Web Tech[span_14](start_span)[span_14](end_span)</h3>
+          <p>Modern HTML5, CSS3, JavaScript, WebGL graphics, and Cloud Database integration.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">Projects & <span>Certifications</span></h2>
+      <div class="grid-cards" id="dynamic-projects">
+        <div class="card">
+          <h3>Anti-Sleep Alarm (Major Project)[span_15](start_span)[span_15](end_span)</h3>
+          <p>Designed a driver-safety device using an IR eye-blink sensor and Arduino Uno to monitor eye activity, detect drowsiness, and activate a buzzer alarm[span_16](start_span)[span_16](end_span).</p>
+          <span class="tag">Embedded Systems</span>
+        </div>
+        <div class="card">
+          <h3>Electricity from Garbage[span_17](start_span)[span_17](end_span)</h3>
+          <p>Studied waste-to-energy concepts converting biodegradable waste into biogas through anaerobic digestion for renewable power production[span_18](start_span)[span_18](end_span).</p>
+          <span class="tag">Renewable Energy</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const card = document.getElementById('card');
+    const glare = document.getElementById('glare');
+    let bounds;
+
+    function handleMove(clientX, clientY) {
+      bounds = card.getBoundingClientRect();
+      const cardX = bounds.left + bounds.width / 2;
+      const cardY = bounds.top + bounds.height / 2;
+      const rotX = (-(clientY - cardY) / (window.innerHeight / 2)) * 18;
+      const rotY = ((clientX - cardX) / (window.innerWidth / 2)) * 18;
+
+      card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      glare.style.background = `radial-gradient(circle at ${(clientX - bounds.left)}px ${(clientY - bounds.top)}px, rgba(255,255,255,0.3), transparent 60%)`;
+      glare.style.opacity = '1';
+    }
+
+    window.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+    window.addEventListener('touchmove', (e) => {
+      if(e.touches.length > 0) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    });
+
+    window.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      glare.style.opacity = '0';
+    });
+  </script>
+</body>
+</html>
