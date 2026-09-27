@@ -395,7 +395,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
-    const rootRef = ref(db, 'portfolio_data_v2');
+    const rootRef = ref(db, 'portfolio_data_v3');
 
     let state = {
       profile: {
@@ -409,10 +409,15 @@
         location: "Vizag / Machilipatnam",
         role: "Systems & Web Dev"
       },
-      education: [
-        { id: "e1", title: "B.Tech in ECE (2nd Year)", body: "Krishna University, Machilipatnam", tag: "Pursuing (2024 - Present)" },
-        { id: "e2", title: "Diploma in ECE", body: "Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)", tag: "84% Aggregate (2023 - 2026)" },
-        { id: "e3", title: "Secondary School (SSC)", body: "Sri Bhavani Vidyanikethan EM School", tag: "88.1% (2023)" }
+      projects: [
+        { id: "p1", title: "Anti-Sleep Alarm (Major Project)", body: "Safety unit using an IR blink sensor and Arduino Uno to detect drowsiness and trigger alert buzzers.", tag: "Embedded Systems" },
+        { id: "p2", title: "Electricity from Garbage", body: "Energy conversion analysis studying anaerobic digestion of organic matter to biogas.", tag: "Renewable Energy" }
+      ],
+      internships: [
+        { id: "i1", title: "Embedded & IoT Trainee", body: "Worked on circuit assembly, sensor calibrations, and micro-controller programming for automated alert modules.", tag: "Industrial Training" }
+      ],
+      certificates: [
+        { id: "c1", title: "PCB Design Fundamentals", body: "Certified training on schematic capturing, trace layout rules, and component soldering techniques.", tag: "Hardware Certification" }
       ],
       skills: [
         { id: "s1", title: "Electronic Components", body: "Testing and analysis of passive/active elements, ICs, and relays.", tag: "Hardware" },
@@ -420,9 +425,10 @@
         { id: "s3", title: "PCB Engineering", body: "Schematic capture, PCB design fundamentals, and precision soldering.", tag: "Circuits" },
         { id: "s4", title: "Web Technologies", body: "HTML5, CSS3, modern JavaScript, interactive WebGL, and Cloud databases.", tag: "Software" }
       ],
-      projects: [
-        { id: "p1", title: "Anti-Sleep Alarm (Major Project)", body: "Safety unit using an IR blink sensor and Arduino Uno to detect drowsiness and trigger alert buzzers.", tag: "Embedded Systems" },
-        { id: "p2", title: "Electricity from Garbage", body: "Energy conversion analysis studying anaerobic digestion of organic matter to biogas.", tag: "Renewable Energy" }
+      education: [
+        { id: "e1", title: "B.Tech in ECE (2nd Year)", body: "Krishna University, Machilipatnam", tag: "Pursuing (2024 - Present)" },
+        { id: "e2", title: "Diploma in ECE", body: "Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)", tag: "84% Aggregate (2023 - 2026)" },
+        { id: "e3", title: "Secondary School (SSC)", body: "Sri Bhavani Vidyanikethan EM School", tag: "88.1% (2023)" }
       ]
     };
 
@@ -434,6 +440,8 @@
       const data = snapshot.val();
       if (data) {
         state = data;
+        if (!state.internships) state.internships = [];
+        if (!state.certificates) state.certificates = [];
         renderAll();
       } else {
         renderAll();
@@ -452,10 +460,12 @@
       document.getElementById('p-location').innerText = state.profile.location || "";
       document.getElementById('p-role').innerText = state.profile.role || "";
 
-      // Grids sync
-      renderSectionGrid('education-grid', state.education, 'education');
-      renderSectionGrid('skills-grid', state.skills, 'skills');
+      // All 5 Grids sync
       renderSectionGrid('projects-grid', state.projects, 'projects');
+      renderSectionGrid('internships-grid', state.internships, 'internships');
+      renderSectionGrid('certificates-grid', state.certificates, 'certificates');
+      renderSectionGrid('skills-grid', state.skills, 'skills');
+      renderSectionGrid('education-grid', state.education, 'education');
 
       if (isAdmin) {
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
@@ -466,7 +476,7 @@
       const container = document.getElementById(elementId);
       container.innerHTML = "";
       if (!items || items.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No items listed.</p>`;
+        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No items listed in this section.</p>`;
         return;
       }
       items.forEach((item, index) => {
@@ -482,7 +492,7 @@
       });
     }
 
-    // Direct Firebase Auth Verification (Uses your registered Email & Password)
+    // Direct Firebase Auth Verification
     const adminBtn = document.getElementById('admin-btn');
     const saveBtn = document.getElementById('save-btn');
 
@@ -499,7 +509,7 @@
         document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
         adminBtn.style.display = 'none';
         saveBtn.style.display = 'inline-block';
-        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nDirectly edit text, click '+ Add' for new items, or delete cards.");
+        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nNow you can edit text directly, click '+ Add' for new items in Projects, Internships, Certificates, Skills & Education, or delete cards.");
       } catch (err) {
         alert("❌ Authentication failed: " + err.message);
       }
@@ -593,7 +603,7 @@
 </head>
 <body>
 
-  <!-- Dynamic mouse spotlight -->
+  <!-- Dynamic cursor spotlight overlay -->
   <div class="spotlight-overlay" id="spotlight"></div>
 
   <!-- Navbar -->
@@ -639,7 +649,7 @@
       </div>
     </header>
 
-    <!-- Projects Section -->
+    <!-- 1. Projects Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Projects & Builds</h2>
@@ -648,7 +658,25 @@
       <div class="grid" id="projects-grid"></div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- 2. Internships Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Internships & Experience</h2>
+        <button class="add-btn" data-section="internships">+ Add Internship</button>
+      </div>
+      <div class="grid" id="internships-grid"></div>
+    </section>
+
+    <!-- 3. Certificates Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Certifications & Achievements</h2>
+        <button class="add-btn" data-section="certificates">+ Add Certificate</button>
+      </div>
+      <div class="grid" id="certificates-grid"></div>
+    </section>
+
+    <!-- 4. Skills Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Technical Expertise</h2>
@@ -657,7 +685,7 @@
       <div class="grid" id="skills-grid"></div>
     </section>
 
-    <!-- Education Section -->
+    <!-- 5. Education Section -->
     <section>
       <div class="section-bar">
         <h2 class="section-title">Education & Credentials</h2>
@@ -673,15 +701,15 @@
       <h3 class="modal-title" id="modal-title">Add Item</h3>
       <div class="form-group">
         <label>Title / Header</label>
-        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. IoT Smart Home Unit">
+        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. Embedded IoT Intern / AWS Certificate">
       </div>
       <div class="form-group">
         <label>Description / Details</label>
-        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Details about this project or credential..."></textarea>
+        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Organization name, what you worked on, or key learnings..."></textarea>
       </div>
       <div class="form-group">
-        <label>Tag / Category</label>
-        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. Embedded, 2026, Hardware">
+        <label>Tag / Category / Year</label>
+        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. 2026, 3 Months, Hardware">
       </div>
       <div class="modal-actions">
         <button class="btn btn-admin" id="modal-cancel">Cancel</button>
