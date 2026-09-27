@@ -3,349 +3,384 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Koppisetti Nani | ECE & Developer Portfolio</title>
+  <title>Koppisetti Nani — Systems & Web Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(17, 24, 39, 0.55);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #00f2fe;
+      --accent-muted: rgba(0, 242, 254, 0.12);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
+
     body {
-      background-color: #060913;
-      color: #fff;
+      background-color: var(--bg);
+      color: var(--text-main);
       overflow-x: hidden;
-      scroll-behavior: smooth;
+      line-height: 1.5;
     }
 
-    /* Ambient Background Lights */
-    .bg-glow-1 {
+    /* Ambient cursor spotlight glow */
+    .spotlight-overlay {
       position: fixed;
-      top: -100px;
-      left: 10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.14) 0%, transparent 70%);
-      filter: blur(100px);
-      z-index: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-    }
-    .bg-glow-2 {
-      position: fixed;
-      bottom: -100px;
-      right: 10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(147, 51, 234, 0.16) 0%, transparent 70%);
-      filter: blur(100px);
-      z-index: 0;
-      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 254, 0.05), transparent 80%);
     }
 
-    /* Navbar */
+    /* Top Navigation */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 14px 6%;
+      padding: 14px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(6, 9, 19, 0.85);
-      backdrop-filter: blur(14px);
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(16px);
       z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--card-border);
     }
-    .logo {
+    .brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
       font-size: 1.25rem;
-      font-weight: 700;
-      color: #00f2fe;
-      letter-spacing: 1px;
+      letter-spacing: -0.5px;
+      color: #fff;
     }
-    .nav-actions {
+    .brand span { color: var(--accent); }
+
+    .nav-btns {
       display: flex;
-      align-items: center;
       gap: 10px;
     }
-    .edit-toggle-btn {
-      background: linear-gradient(135deg, #00f2fe, #4facfe);
-      color: #060913;
-      border: none;
+    .btn {
       padding: 7px 15px;
+      font-size: 0.82rem;
+      font-weight: 600;
       border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.2s;
+      border: none;
     }
-    .edit-toggle-btn:hover { transform: scale(1.04); }
-    .save-btn {
+    .btn-admin {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border: 1px solid var(--card-border);
+    }
+    .btn-admin:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-save {
       background: #10b981;
       color: #fff;
-      border: none;
-      padding: 7px 15px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
       display: none;
     }
+    .btn-save:hover { background: #059669; }
 
     .container {
       width: 90%;
-      max-width: 1050px;
+      max-width: 1020px;
       margin: 0 auto;
       position: relative;
-      z-index: 10;
+      z-index: 2;
     }
 
-    /* Hero Section: Centered & Balanced */
+    /* Hero Section */
     .hero {
-      min-height: calc(100vh - 60px);
+      padding-top: 110px;
+      padding-bottom: 50px;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 35px;
-      padding-top: 80px;
-      padding-bottom: 30px;
+      gap: 40px;
     }
 
-    .badge {
+    .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 14px;
-      background: rgba(0, 242, 254, 0.1);
-      border: 1px solid rgba(0, 242, 254, 0.35);
-      color: #00f2fe;
+      gap: 8px;
+      padding: 5px 12px;
+      background: var(--accent-muted);
+      border: 1px solid rgba(0, 242, 254, 0.25);
       border-radius: 20px;
-      font-size: 12.5px;
-      margin-bottom: 14px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 18px;
     }
-    .badge::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      background: #00f2fe;
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 8px #00f2fe;
+      box-shadow: 0 0 8px var(--accent);
     }
 
     h1 {
-      font-size: 2.9rem;
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 14px;
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
     }
     h1 span {
-      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9333ea 100%);
+      background: linear-gradient(135deg, #fff 30%, #9ca3af 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .subtitle {
-      color: #94a3b8;
+    .bio {
+      color: var(--text-muted);
       font-size: 0.98rem;
       line-height: 1.6;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
-    .contact-chips {
+    .chips-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
+      gap: 8px;
     }
     .chip {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 7px 13px;
-      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      padding: 6px 13px;
+      border-radius: 8px;
       font-size: 0.82rem;
-      color: #cbd5e1;
+      color: #e5e7eb;
       text-decoration: none;
-      transition: all 0.2s;
-    }
-    .chip:hover {
-      border-color: #00f2fe;
-      color: #00f2fe;
-      transform: translateY(-2px);
     }
 
-    /* Interactive Spotlight Image Card */
-    .image-stage {
+    /* Profile Display */
+    .profile-card-wrapper {
       perspective: 1000px;
       display: flex;
       justify-content: center;
-      align-items: center;
     }
-
-    .interactive-card {
+    .profile-card {
       position: relative;
-      width: 320px;
-      height: 420px;
-      border-radius: 24px;
-      background: #0b1120;
+      width: 290px;
+      height: 380px;
+      border-radius: 20px;
+      background: #0f172a;
       border: 1px solid rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      cursor: pointer;
       transform-style: preserve-3d;
-      transition: transform 0.15s ease-out, box-shadow 0.2s;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    .interactive-card:hover {
-      box-shadow: 0 25px 50px rgba(0, 242, 254, 0.15);
-    }
-
-    /* Ambient Outer Halo */
-    .card-halo {
-      position: absolute;
-      inset: -15px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(147, 51, 234, 0.25));
-      filter: blur(20px);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .card-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      overflow: hidden;
-      border-radius: 23px;
-    }
-
-    .card-content img {
+    .profile-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
     }
-    .interactive-card:hover .card-content img {
-      transform: scale(1.03);
-    }
-
-    /* Cursor Follow Spotlight & Glass Glare */
-    .spotlight {
+    .card-footer {
       position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 3;
-      mix-blend-mode: overlay;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .card-badge-floating {
-      position: absolute;
-      bottom: 14px;
-      left: 14px;
-      right: 14px;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
       padding: 10px 14px;
-      background: rgba(6, 9, 19, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      z-index: 4;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-    }
-    .card-badge-floating .role {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #fff;
-    }
-    .card-badge-floating .status-dot {
-      display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      color: #10b981;
-    }
-    .card-badge-floating .status-dot::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 6px #10b981;
+      font-size: 0.8rem;
     }
 
     /* Sections */
-    section { padding: 35px 0; }
+    section { padding: 40px 0; }
+    .section-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
     .section-title {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
       color: #fff;
     }
-    .section-title span { color: #00f2fe; }
+    .add-btn {
+      display: none;
+      background: var(--accent-muted);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: var(--accent);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .add-btn:hover { background: rgba(0, 242, 254, 0.2); }
 
-    .grid-cards {
+    /* Interactive Grids */
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 16px;
     }
-    .card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .grid-item {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 18px;
-      backdrop-filter: blur(10px);
-      transition: border-color 0.25s, transform 0.2s;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
     }
-    .card:hover {
-      border-color: rgba(0, 242, 254, 0.35);
+    .grid-item:hover {
+      border-color: rgba(255, 255, 255, 0.18);
       transform: translateY(-2px);
     }
-    .card h3 { font-size: 1.15rem; margin-bottom: 6px; color: #f8fafc; }
-    .card p { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; }
-    .card .tag {
+    .grid-item h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #f9fafb;
+      margin-bottom: 6px;
+    }
+    .grid-item p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .item-tag {
       display: inline-block;
-      margin-top: 10px;
-      font-size: 0.75rem;
-      color: #00f2fe;
-      background: rgba(0, 242, 254, 0.1);
+      margin-top: 12px;
+      font-size: 0.72rem;
+      color: var(--accent);
+      background: var(--accent-muted);
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
       padding: 3px 8px;
       border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: none;
     }
 
-    /* Editing Highlights */
-    body.is-editing [contenteditable="true"] {
-      outline: 2px dashed #00f2fe !important;
-      background: rgba(0, 242, 254, 0.08);
+    /* Modal for Adding Items */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-box {
+      width: 90%;
+      max-width: 440px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+    }
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: #fff;
+      font-size: 0.88rem;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--accent);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* Admin mode markers */
+    body.is-admin [contenteditable="true"] {
+      outline: 1.5px dashed var(--accent) !important;
+      background: rgba(0, 242, 254, 0.06);
       border-radius: 4px;
-      cursor: text;
+    }
+    body.is-admin .add-btn,
+    body.is-admin .delete-btn {
+      display: inline-block;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 820px) {
       .hero {
         grid-template-columns: 1fr;
-        padding-top: 75px;
+        padding-top: 90px;
         text-align: center;
-        gap: 25px;
+        gap: 30px;
       }
-      .interactive-card {
-        width: 280px;
-        height: 380px;
-        margin: 0 auto;
-      }
-      h1 { font-size: 2.2rem; }
-      .contact-chips { justify-content: center; }
+      .profile-card { width: 260px; height: 340px; margin: 0 auto; }
+      .chips-group { justify-content: center; }
+      h1 { font-size: 2.3rem; }
     }
   </style>
 
-  <!-- Firebase Setup -->
+  <!-- Firebase Database & Authentication Engine -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyB-Y-VPSbaAUDYS06A3sdnRqklybn2CdDE",
@@ -359,207 +394,330 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const siteContentRef = ref(db, 'site_content');
+    const auth = getAuth(app);
+    const rootRef = ref(db, 'portfolio_data_v2');
 
-    onValue(siteContentRef, (snapshot) => {
+    let state = {
+      profile: {
+        badge: "ECE Undergrad & Systems Developer",
+        name: "Koppisetti Nani",
+        bio: "2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.",
+        email: "koppisettinani69@gmail.com",
+        phone: "+91 8328022844",
+        github: "nani69-hub",
+        linkedin: "nani-koppisetti",
+        location: "Vizag / Machilipatnam",
+        role: "Systems & Web Dev"
+      },
+      education: [
+        { id: "e1", title: "B.Tech in ECE (2nd Year)", body: "Krishna University, Machilipatnam", tag: "Pursuing (2024 - Present)" },
+        { id: "e2", title: "Diploma in ECE", body: "Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)", tag: "84% Aggregate (2023 - 2026)" },
+        { id: "e3", title: "Secondary School (SSC)", body: "Sri Bhavani Vidyanikethan EM School", tag: "88.1% (2023)" }
+      ],
+      skills: [
+        { id: "s1", title: "Electronic Components", body: "Testing and analysis of passive/active elements, ICs, and relays.", tag: "Hardware" },
+        { id: "s2", title: "Microcontrollers & IoT", body: "Architecture, Arduino Uno programming, and sensor communication protocols.", tag: "Embedded" },
+        { id: "s3", title: "PCB Engineering", body: "Schematic capture, PCB design fundamentals, and precision soldering.", tag: "Circuits" },
+        { id: "s4", title: "Web Technologies", body: "HTML5, CSS3, modern JavaScript, interactive WebGL, and Cloud databases.", tag: "Software" }
+      ],
+      projects: [
+        { id: "p1", title: "Anti-Sleep Alarm (Major Project)", body: "Safety unit using an IR blink sensor and Arduino Uno to detect drowsiness and trigger alert buzzers.", tag: "Embedded Systems" },
+        { id: "p2", title: "Electricity from Garbage", body: "Energy conversion analysis studying anaerobic digestion of organic matter to biogas.", tag: "Renewable Energy" }
+      ]
+    };
+
+    let isAdmin = false;
+    let targetSection = null;
+
+    // Realtime Cloud Synchronization Listener
+    onValue(rootRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        Object.keys(data).forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.innerHTML = data[id];
-        });
-      }
-    });
-
-    const editBtn = document.getElementById('edit-mode-btn');
-    const saveBtn = document.getElementById('save-mode-btn');
-
-    editBtn.addEventListener('click', () => {
-      const password = prompt("Admin password enter cheyandi:");
-      if (password === "nani123") {
-        document.body.classList.add('is-editing');
-        document.querySelectorAll('.editable').forEach(el => {
-          el.setAttribute('contenteditable', 'true');
-        });
-        editBtn.style.display = 'none';
-        saveBtn.style.display = 'inline-block';
-        alert("Edit Mode ON! Text direct ga tap chesi edit cheyandi, aypoyaka Save nokkandi.");
+        state = data;
+        renderAll();
       } else {
-        alert("Wrong Password!");
+        renderAll();
       }
     });
 
+    function renderAll() {
+      // Profile sync
+      document.getElementById('p-badge').innerText = state.profile.badge || "";
+      document.getElementById('p-name').innerText = state.profile.name || "";
+      document.getElementById('p-bio').innerText = state.profile.bio || "";
+      document.getElementById('p-email').innerText = state.profile.email || "";
+      document.getElementById('p-phone').innerText = state.profile.phone || "";
+      document.getElementById('p-github').innerText = "GitHub: " + (state.profile.github || "");
+      document.getElementById('p-linkedin').innerText = "LinkedIn: " + (state.profile.linkedin || "");
+      document.getElementById('p-location').innerText = state.profile.location || "";
+      document.getElementById('p-role').innerText = state.profile.role || "";
+
+      // Grids sync
+      renderSectionGrid('education-grid', state.education, 'education');
+      renderSectionGrid('skills-grid', state.skills, 'skills');
+      renderSectionGrid('projects-grid', state.projects, 'projects');
+
+      if (isAdmin) {
+        document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+      }
+    }
+
+    function renderSectionGrid(elementId, items, sectionKey) {
+      const container = document.getElementById(elementId);
+      container.innerHTML = "";
+      if (!items || items.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No items listed.</p>`;
+        return;
+      }
+      items.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'grid-item';
+        div.innerHTML = `
+          <button class="delete-btn" data-sec="${sectionKey}" data-idx="${index}">🗑 Delete</button>
+          <h3 class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="title">${item.title}</h3>
+          <p class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="body">${item.body}</p>
+          <span class="item-tag editable" data-sec="${sectionKey}" data-idx="${index}" data-field="tag">${item.tag || "General"}</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Direct Firebase Auth Verification (Uses your registered Email & Password)
+    const adminBtn = document.getElementById('admin-btn');
+    const saveBtn = document.getElementById('save-btn');
+
+    adminBtn.addEventListener('click', async () => {
+      const email = prompt("Enter your Firebase Admin Email:");
+      if (!email) return;
+      const pwd = prompt("Enter Password:");
+      if (!pwd) return;
+
+      try {
+        await signInWithEmailAndPassword(auth, email.trim(), pwd);
+        isAdmin = true;
+        document.body.classList.add('is-admin');
+        document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+        adminBtn.style.display = 'none';
+        saveBtn.style.display = 'inline-block';
+        alert("✅ Cloud Authentication Successful! Admin Mode ON.\n\nDirectly edit text, click '+ Add' for new items, or delete cards.");
+      } catch (err) {
+        alert("❌ Authentication failed: " + err.message);
+      }
+    });
+
+    // Save Changes to Firebase Realtime Database
     saveBtn.addEventListener('click', () => {
-      const contentToSave = {};
-      document.querySelectorAll('.editable').forEach(el => {
-        if (el.id) contentToSave[el.id] = el.innerHTML;
-        el.setAttribute('contenteditable', 'false');
+      state.profile.badge = document.getElementById('p-badge').innerText;
+      state.profile.name = document.getElementById('p-name').innerText;
+      state.profile.bio = document.getElementById('p-bio').innerText;
+      state.profile.email = document.getElementById('p-email').innerText;
+      state.profile.phone = document.getElementById('p-phone').innerText;
+      state.profile.location = document.getElementById('p-location').innerText;
+      state.profile.role = document.getElementById('p-role').innerText;
+
+      document.querySelectorAll('.grid-item .editable').forEach(el => {
+        const sec = el.getAttribute('data-sec');
+        const idx = el.getAttribute('data-idx');
+        const field = el.getAttribute('data-field');
+        if (state[sec] && state[sec][idx]) {
+          state[sec][idx][field] = el.innerText;
+        }
       });
 
-      set(siteContentRef, contentToSave).then(() => {
-        document.body.classList.remove('is-editing');
+      set(rootRef, state).then(() => {
+        isAdmin = false;
+        document.body.classList.remove('is-admin');
+        document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'false'));
         saveBtn.style.display = 'none';
-        editBtn.style.display = 'inline-block';
-        alert("Mee edits database lo successfully save ayyayi!");
-      }).catch(err => {
-        alert("Error saving: " + err.message);
+        adminBtn.style.display = 'inline-block';
+        alert("🎉 Real-time data successfully saved to cloud!");
+      }).catch(err => alert("⚠️ Error saving: " + err.message));
+    });
+
+    // Delete Card Listener
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-btn')) {
+        const sec = e.target.getAttribute('data-sec');
+        const idx = parseInt(e.target.getAttribute('data-idx'), 10);
+        if (confirm("Delete this card?")) {
+          state[sec].splice(idx, 1);
+          renderAll();
+        }
+      }
+    });
+
+    // Add Modal Actions
+    const modal = document.getElementById('add-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const inputTitle = document.getElementById('item-title-input');
+    const inputBody = document.getElementById('item-body-input');
+    const inputTag = document.getElementById('item-tag-input');
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        targetSection = btn.getAttribute('data-section');
+        modalTitle.innerText = `Add New ${targetSection.toUpperCase()} Item`;
+        inputTitle.value = '';
+        inputBody.value = '';
+        inputTag.value = '';
+        modal.style.display = 'flex';
       });
+    });
+
+    document.getElementById('modal-cancel').addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    document.getElementById('modal-save').addEventListener('click', () => {
+      const title = inputTitle.value.trim();
+      const body = inputBody.value.trim();
+      const tag = inputTag.value.trim();
+
+      if (!title) {
+        alert("Title is required!");
+        return;
+      }
+
+      if (!state[targetSection]) state[targetSection] = [];
+      state[targetSection].push({
+        id: "item_" + Date.now(),
+        title: title,
+        body: body || "",
+        tag: tag || "General"
+      });
+
+      modal.style.display = 'none';
+      renderAll();
     });
   </script>
 </head>
 <body>
 
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
+  <!-- Dynamic mouse spotlight -->
+  <div class="spotlight-overlay" id="spotlight"></div>
 
+  <!-- Navbar -->
   <nav>
-    <div class="logo">K. NANI</div>
-    <div class="nav-actions">
-      <button class="edit-toggle-btn" id="edit-mode-btn">✏️ Edit Website</button>
-      <button class="save-btn" id="save-mode-btn">💾 Save Changes</button>
+    <div class="brand">K. <span>NANI</span></div>
+    <div class="nav-btns">
+      <button class="btn btn-admin" id="admin-btn">⚙️ Admin Mode</button>
+      <button class="btn btn-save" id="save-btn">💾 Save Changes</button>
     </div>
   </nav>
 
   <div class="container">
     <!-- Hero Section -->
-    <section class="hero">
+    <header class="hero">
       <div>
-        <span class="badge editable" id="hero-badge">ECE Undergrad & Tech Enthusiast</span>
-        <h1>Hi, I'm <span class="editable" id="hero-name">Koppisetti Nani</span></h1>
-        <p class="subtitle editable" id="hero-desc">
-          Currently pursuing 2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Native of Vizag with strong practical knowledge in circuits, microcontrollers, and modern interactive web.
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span class="editable" id="p-badge">ECE Undergrad & Systems Developer</span>
+        </div>
+        <h1>Hi, I'm <span class="editable" id="p-name">Koppisetti Nani</span></h1>
+        <p class="bio editable" id="p-bio">
+          2nd year B.Tech in Electronics and Communication Engineering (ECE) at Krishna University. Focused on microcontroller architecture, circuit validation, and interactive software development.
         </p>
 
-        <div class="contact-chips">
-          <span class="chip editable" id="chip-mail">koppisettinani69@gmail.com</span>
-          <span class="chip editable" id="chip-phone">+91 8328022844</span>
-          <span class="chip editable" id="chip-github">GitHub: nani69-hub</span>
-          <span class="chip editable" id="chip-linkedin">LinkedIn: nani-koppisetti</span>
-          <span class="chip editable" id="chip-location">Vizag / Machilipatnam</span>
+        <div class="chips-group">
+          <span class="chip editable" id="p-email">koppisettinani69@gmail.com</span>
+          <span class="chip editable" id="p-phone">+91 8328022844</span>
+          <span class="chip editable" id="p-github">GitHub: nani69-hub</span>
+          <span class="chip editable" id="p-linkedin">LinkedIn: nani-koppisetti</span>
+          <span class="chip editable" id="p-location">Vizag / Machilipatnam</span>
         </div>
       </div>
 
-      <!-- Attractive 2D Interactive Stage -->
-      <div class="image-stage">
-        <div class="card-halo"></div>
-        <div class="interactive-card" id="interactive-card">
-          <div class="spotlight" id="spotlight"></div>
-          <div class="card-content">
-            <img src="avatar.png" alt="Koppisetti Nani" />
-          </div>
-          <div class="card-badge-floating">
-            <span class="role editable" id="badge-role">ECE Developer</span>
-            <span class="status-dot">Available for Projects</span>
+      <!-- Minimalist Interactive Photo Card -->
+      <div class="profile-card-wrapper">
+        <div class="profile-card" id="card">
+          <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Profile">
+          <div class="card-footer">
+            <span class="editable" id="p-role">Systems & Web Dev</span>
+            <span style="color: #10b981; font-weight: 600;">● Active</span>
           </div>
         </div>
       </div>
+    </header>
+
+    <!-- Projects Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Projects & Builds</h2>
+        <button class="add-btn" data-section="projects">+ Add Project</button>
+      </div>
+      <div class="grid" id="projects-grid"></div>
+    </section>
+
+    <!-- Skills Section -->
+    <section>
+      <div class="section-bar">
+        <h2 class="section-title">Technical Expertise</h2>
+        <button class="add-btn" data-section="skills">+ Add Skill</button>
+      </div>
+      <div class="grid" id="skills-grid"></div>
     </section>
 
     <!-- Education Section -->
     <section>
-      <h2 class="section-title">Education <span>Journey</span></h2>
-      <div class="grid-cards">
-        <div class="card">
-          <h3 class="editable" id="edu-1-title">B.Tech in ECE (2nd Year)</h3>
-          <p class="editable" id="edu-1-body">Krishna University, Machilipatnam</p>
-          <span class="tag editable" id="edu-1-tag">Pursuing (2024 - Present)</span>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="edu-2-title">Diploma in ECE</h3>
-          <p class="editable" id="edu-2-body">Sai Ganapathi Engineering Shift Polytechnic, Gidijala (SBTET)</p>
-          <span class="tag editable" id="edu-2-tag">84% Aggregate (2023 - 2026)</span>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="edu-3-title">Secondary School (SSC)</h3>
-          <p class="editable" id="edu-3-body">Sri Bhavani Vidyanikethan EM School</p>
-          <span class="tag editable" id="edu-3-tag">88.1% (2023)</span>
-        </div>
+      <div class="section-bar">
+        <h2 class="section-title">Education & Credentials</h2>
+        <button class="add-btn" data-section="education">+ Add Education</button>
       </div>
-    </section>
-
-    <!-- Technical Skills Section -->
-    <section>
-      <h2 class="section-title">Technical <span>Skills</span></h2>
-      <div class="grid-cards">
-        <div class="card">
-          <h3 class="editable" id="skill-1-title">Electronic Components</h3>
-          <p class="editable" id="skill-1-body">Working knowledge of Resistors, Capacitors, Inductors, Diodes, LEDs, Transistors, ICs, Relays & Switches.</p>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="skill-2-title">Microcontrollers & IoT</h3>
-          <p class="editable" id="skill-2-body">Microcontroller concepts, Arduino Uno development, and sensor interface integration.</p>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="skill-3-title">PCB Design & Assembly</h3>
-          <p class="editable" id="skill-3-body">Analog circuit design fundamentals, PCB design process awareness, soldering and desoldering.</p>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="skill-4-title">Computer & Web Tech</h3>
-          <p class="editable" id="skill-4-body">Modern HTML5, CSS3, JavaScript, WebGL graphics, and Cloud Database integration.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section>
-      <h2 class="section-title">Projects & <span>Certifications</span></h2>
-      <div class="grid-cards">
-        <div class="card">
-          <h3 class="editable" id="proj-1-title">Anti-Sleep Alarm (Major Project)</h3>
-          <p class="editable" id="proj-1-body">Designed a driver-safety device using an IR eye-blink sensor and Arduino Uno to monitor eye activity, detect drowsiness, and activate a buzzer alarm.</p>
-          <span class="tag editable" id="proj-1-tag">Embedded Systems</span>
-        </div>
-        <div class="card">
-          <h3 class="editable" id="proj-2-title">Electricity from Garbage</h3>
-          <p class="editable" id="proj-2-body">Studied waste-to-energy concepts converting biodegradable waste into biogas through anaerobic digestion for renewable power production.</p>
-          <span class="tag editable" id="proj-2-tag">Renewable Energy</span>
-        </div>
-      </div>
+      <div class="grid" id="education-grid"></div>
     </section>
   </div>
 
-  <!-- Smooth Cursor & Tilt Interaction Script -->
+  <!-- Add Item Modal -->
+  <div class="modal-backdrop" id="add-modal">
+    <div class="modal-box">
+      <h3 class="modal-title" id="modal-title">Add Item</h3>
+      <div class="form-group">
+        <label>Title / Header</label>
+        <input type="text" class="form-control" id="item-title-input" placeholder="e.g. IoT Smart Home Unit">
+      </div>
+      <div class="form-group">
+        <label>Description / Details</label>
+        <textarea rows="3" class="form-control" id="item-body-input" placeholder="Details about this project or credential..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tag / Category</label>
+        <input type="text" class="form-control" id="item-tag-input" placeholder="e.g. Embedded, 2026, Hardware">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-admin" id="modal-cancel">Cancel</button>
+        <button class="btn btn-save" style="display:inline-block;" id="modal-save">Add Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smooth Cursor Spotlight & 3D Tilt Interaction -->
   <script>
-    const card = document.getElementById('interactive-card');
     const spotlight = document.getElementById('spotlight');
+    const card = document.getElementById('card');
 
-    function handleCardMove(clientX, clientY) {
+    window.addEventListener('mousemove', (e) => {
+      spotlight.style.setProperty('--x', e.clientX + 'px');
+      spotlight.style.setProperty('--y', e.clientY + 'px');
+    });
+
+    function tiltCard(clientX, clientY) {
       const rect = card.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Realistic 3D Tilt Angle (-14 to +14 deg)
-      const rotateX = ((centerY - y) / centerY) * 14;
-      const rotateY = ((x - centerX) / centerX) * 14;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-      // Dynamic Radial Spotlight Reflection
-      spotlight.style.opacity = '1';
-      spotlight.style.background = `radial-gradient(circle 220px at ${x}px ${y}px, rgba(255, 255, 255, 0.35), rgba(0, 242, 254, 0.15) 40%, transparent 80%)`;
+      const x = clientX - rect.left - rect.width / 2;
+      const y = clientY - rect.top - rect.height / 2;
+      const rX = -(y / rect.height) * 14;
+      const rY = (x / rect.width) * 14;
+      card.style.transform = `perspective(800px) rotateX(${rX}deg) rotateY(${rY}deg)`;
     }
 
-    card.addEventListener('mousemove', (e) => {
-      handleCardMove(e.clientX, e.clientY);
-    });
-
+    card.addEventListener('mousemove', (e) => tiltCard(e.clientX, e.clientY));
     card.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        handleCardMove(e.touches[0].clientX, e.touches[0].clientY);
-      }
+      if (e.touches.length > 0) tiltCard(e.touches[0].clientX, e.touches[0].clientY);
     });
-
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-      spotlight.style.opacity = '0';
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
     });
-
     card.addEventListener('touchend', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-      spotlight.style.opacity = '0';
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
     });
   </script>
 </body>
