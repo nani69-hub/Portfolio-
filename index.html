@@ -563,7 +563,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyB-Y-VPSbaAUDYS06A3sdnRqklybn2CdDE",
@@ -580,9 +580,7 @@
     const auth = getAuth(app);
     const rootRef = ref(db, 'portfolio_data_final_v1');
 
-    // 1. Check local cache first (Instant render, no delay)
-    const cachedData = localStorage.getItem('nani_portfolio_final_cache');
-    let state = cachedData ? JSON.parse(cachedData) : {
+    const DEFAULT_STATE = {
       profile: {
         name: "Koppisetti Nani",
         subtag: "Crafting hardware systems & interactive web experiences.",
@@ -618,6 +616,54 @@
       ]
     };
 
+    const SECTION_KEYS = ['jobs', 'internships', 'certificates', 'projects', 'skills', 'education'];
+
+    function normalizeState(raw) {
+      const fallback = structuredClone(DEFAULT_STATE);
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return fallback;
+      const profile = raw.profile && typeof raw.profile === 'object' && !Array.isArray(raw.profile) ? raw.profile : {};
+      const clean = { profile: { ...fallback.profile, ...profile } };
+      SECTION_KEYS.forEach(sec => {
+        clean[sec] = Array.isArray(raw[sec]) ? raw[sec].filter(item => item && typeof item === 'object' && !Array.isArray(item)).map(item => ({
+          id: String(item.id ?? ''),
+          title: String(item.title ?? ''),
+          body: String(item.body ?? ''),
+          tag: String(item.tag ?? 'General'),
+          ...(item.img ? { img: String(item.img) } : {})
+        })) : fallback[sec];
+      });
+      return clean;
+    }
+
+    function loadCachedState() {
+      try {
+        const raw = localStorage.getItem('nani_portfolio_final_cache');
+        return raw ? normalizeState(JSON.parse(raw)) : structuredClone(DEFAULT_STATE);
+      } catch (err) {
+        console.warn('Invalid local cache ignored:', err);
+        localStorage.removeItem('nani_portfolio_final_cache');
+        return structuredClone(DEFAULT_STATE);
+      }
+    }
+
+    function safeImageUrl(value) {
+      if (!value) return null;
+      try {
+        const url = new URL(String(value), window.location.href);
+        if (url.protocol !== 'https:') return null;
+        return url.href;
+      } catch {
+        return null;
+      }
+    }
+
+    function persistLocalState() {
+      localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+    }
+
+    // 1. Check local cache first (Instant render, no delay)
+    let state = loadCachedState();
+
     let isAdmin = false;
     let targetSection = null;
 
@@ -628,15 +674,8 @@
     onValue(rootRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        state = data;
-        if (!state.jobs) state.jobs = [];
-        if (!state.internships) state.internships = [];
-        if (!state.certificates) state.certificates = [];
-        if (!state.projects) state.projects = [];
-        if (!state.skills) state.skills = [];
-        if (!state.education) state.education = [];
-        
-        localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+        state = normalizeState(data);
+        persistLocalState();
         renderAll();
       }
     });
@@ -689,32 +728,80 @@
 
     function renderSectionGrid(elementId, items, sectionKey) {
       const container = document.getElementById(elementId);
-      container.innerHTML = "";
-      if (!items || items.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem;">No items listed in this section.</p>`;
+      container.replaceChildren();
+      if (!Array.isArray(items) || items.length === 0) {
+        const empty = document.createElement('p');
+        empty.style.color = 'var(--text-muted)';
+        empty.style.fontSize = '0.85rem';
+        empty.textContent = 'No items listed in this section.';
+        container.appendChild(empty);
         return;
       }
+
       items.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'grid-item';
 
-        let imgHtml = '';
-        if (item.img) {
-          imgHtml = `
-            <div class="cert-img-container" onclick="window.open('${item.img}', '_blank')">
-              <img src="${item.img}" alt="Certificate" onerror="this.src='https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&auto=format&fit=crop'">
-              <span class="view-cert-badge">🔍 View Full Certificate</span>
-            </div>
-          `;
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.dataset.sec = sectionKey;
+        deleteBtn.dataset.idx = String(index);
+        deleteBtn.textContent = '🗑 Delete';
+        div.appendChild(deleteBtn);
+
+        const title = document.createElement('h3');
+        title.className = 'editable';
+        title.dataset.sec = sectionKey;
+        title.dataset.idx = String(index);
+        title.dataset.field = 'title';
+        title.textContent = item.title || '';
+        div.appendChild(title);
+
+        const body = document.createElement('p');
+        body.className = 'editable';
+        body.dataset.sec = sectionKey;
+        body.dataset.idx = String(index);
+        body.dataset.field = 'body';
+        body.textContent = item.body || '';
+        div.appendChild(body);
+
+        const imageUrl = safeImageUrl(item.img);
+        if (imageUrl) {
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'cert-img-container';
+
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.setAttribute('aria-label', 'View full certificate image');
+
+          const img = document.createElement('img');
+          img.src = imageUrl;
+          img.alt = 'Certificate';
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => {
+            img.remove();
+          }, { once: true });
+
+          const badge = document.createElement('span');
+          badge.className = 'view-cert-badge';
+          badge.textContent = '🔍 View Full Certificate';
+
+          link.append(img, badge);
+          imageContainer.appendChild(link);
+          div.appendChild(imageContainer);
         }
 
-        div.innerHTML = `
-          <button class="delete-btn" data-sec="${sectionKey}" data-idx="${index}">🗑 Delete</button>
-          <h3 class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="title">${item.title}</h3>
-          <p class="editable" data-sec="${sectionKey}" data-idx="${index}" data-field="body">${item.body}</p>
-          ${imgHtml}
-          <span class="item-tag editable" data-sec="${sectionKey}" data-idx="${index}" data-field="tag">${item.tag || "General"}</span>
-        `;
+        const tag = document.createElement('span');
+        tag.className = 'item-tag editable';
+        tag.dataset.sec = sectionKey;
+        tag.dataset.idx = String(index);
+        tag.dataset.field = 'tag';
+        tag.textContent = item.tag || 'General';
+        div.appendChild(tag);
+
         container.appendChild(div);
       });
     }
@@ -759,11 +846,12 @@
           }
         });
 
-        // 1. Instant Cache Update
-        localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+        state = normalizeState(state);
+        persistLocalState();
 
-        // 2. Cloud Database Update
+        // Cloud Database Update (Firebase Rules must authorize this authenticated UID)
         await set(rootRef, state);
+        await signOut(auth);
 
         isAdmin = false;
         document.body.classList.remove('is-admin');
@@ -784,7 +872,7 @@
         const idx = parseInt(e.target.getAttribute('data-idx'), 10);
         if (confirm("Delete this card?")) {
           state[sec].splice(idx, 1);
-          localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+          persistLocalState();
           renderAll();
         }
       }
@@ -832,6 +920,11 @@
         return;
       }
 
+      if (img && !safeImageUrl(img)) {
+        alert('Image URL must be a valid HTTPS URL.');
+        return;
+      }
+
       if (!state[targetSection]) state[targetSection] = [];
       const newItem = {
         id: "item_" + Date.now(),
@@ -842,7 +935,7 @@
       if (img) newItem.img = img;
 
       state[targetSection].push(newItem);
-      localStorage.setItem('nani_portfolio_final_cache', JSON.stringify(state));
+      persistLocalState();
       modal.style.display = 'none';
       renderAll();
     });
@@ -899,7 +992,7 @@
         <!-- Merged Avatar Image with Feather Blend -->
         <div class="hero-visual">
           <div class="avatar-blend-container" id="card">
-            <img src="avatar.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop';" alt="Avatar">
+            <img src="avatar.png" alt="Avatar" loading="lazy" referrerpolicy="no-referrer">
           </div>
         </div>
 
