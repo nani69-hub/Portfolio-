@@ -3,7 +3,7 @@
 A modern, cloud-connected personal portfolio featuring a WebGL/Three.js-inspired 3D holographic avatar tilt interaction, live Firestore/Realtime Database content management, and academic showcase.
 
 ## 🚀 Live Demo
-🔗 [View Live Website](https://nani69-hub.github.io/portfolio/)
+🔗 [View Live Website](https://nani69-hub.github.io/Portfolio-/)
 
 ---
 
